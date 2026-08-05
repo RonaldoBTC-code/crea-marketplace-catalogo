@@ -1,0 +1,2000 @@
+  <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CREA Alfombras & Pisos — Catálogo Marketplace</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#14161B;
+  --surface:#1C1F26;
+  --surface-soft:#23262E;
+  --surface-soft-2:#2A2E37;
+  --line:#2E323B;
+  --line-soft:#3C414C;
+  --text:#ECE7DC;
+  --text-dim:#A7AEB8;
+  --text-faint:#6E7480;
+
+  --cat-textil:#CC8552;
+  --cat-agua:#5D8CB3;
+  --cat-verde:#7C9A63;
+  --cat-tecnico:#9098A3;
+  --cat-servicio:#D1A24A;
+
+  --font-display:'Big Shoulders Display', Impact, 'Arial Narrow Bold', sans-serif;
+  --font-body:'IBM Plex Sans', -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-mono:'IBM Plex Mono', 'Courier New', monospace;
+
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:20px;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+}
+
+body{
+  margin:0;
+  font-family:var(--font-body);
+  background-color:var(--bg);
+  color:var(--text);
+  padding:0 0 80px;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.022) 0 1px, transparent 1px 27px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 27px);
+  background-attachment:fixed;
+}
+
+::selection{ background:var(--cat-servicio); color:#1A1604; }
+
+/* ---------- HEADER ---------- */
+header{
+  padding:38px 20px 28px;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+  position:relative;
+}
+.brand-box{
+  display:inline-block;
+  border:2px solid var(--text);
+  border-radius:6px;
+  padding:8px 20px;
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:30px;
+  letter-spacing:2px;
+  color:var(--text);
+}
+.brand-sub{
+  margin-top:12px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--text-dim);
+}
+.brand-tag{
+  margin-top:4px;
+  font-size:13px;
+  color:var(--text-faint);
+}
+
+/* ---------- TOOLBAR ---------- */
+.toolbar-wrap{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(20,22,27,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  padding:14px 20px;
+}
+.toolbar{
+  max-width:900px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.search-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.search-wrap svg{
+  position:absolute;
+  left:12px;
+  width:16px;
+  height:16px;
+  color:var(--text-faint);
+  pointer-events:none;
+}
+#search{
+  width:100%;
+  background:var(--surface-soft);
+  border:1px solid var(--line);
+  color:var(--text);
+  border-radius:var(--radius-sm);
+  padding:10px 12px 10px 36px;
+  font-size:14px;
+  font-family:var(--font-body);
+}
+#search:focus{ outline:none; border-color:var(--cat-servicio); }
+#search::placeholder{ color:var(--text-faint); }
+
+.filter-pills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--surface-soft);
+  border:1px solid var(--line);
+  color:var(--text-dim);
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:12.5px;
+  font-family:var(--font-body);
+  font-weight:500;
+  cursor:pointer;
+  transition:border-color .15s, color .15s, background .15s;
+}
+.pill .dot{
+  width:7px; height:7px; border-radius:50%; flex-shrink:0;
+}
+.pill .pill-count{
+  color:var(--text-faint);
+  font-family:var(--font-mono);
+  font-size:11px;
+}
+.pill:hover{ border-color:var(--line-soft); color:var(--text); }
+.pill.active{
+  background:var(--surface-soft-2);
+  border-color:var(--pill-color, var(--cat-servicio));
+  color:var(--text);
+}
+.result-count{
+  font-size:12px;
+  color:var(--text-faint);
+  font-family:var(--font-mono);
+}
+
+/* ---------- LAYOUT ---------- */
+.container{
+  max-width:900px;
+  margin:0 auto;
+  padding:28px 20px 0;
+}
+
+.cat-section{ margin-bottom:8px; }
+.cat-section.hidden{ display:none; }
+.cat-divider{
+  --accent:var(--cat-servicio);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:36px 0 18px;
+}
+.cat-section:first-child .cat-divider{ margin-top:6px; }
+.cat-icon{
+  width:22px; height:22px;
+  color:var(--accent);
+  flex-shrink:0;
+}
+.cat-icon svg{ width:100%; height:100%; }
+.cat-divider h2{
+  margin:0;
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:20px;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  color:var(--text);
+  white-space:nowrap;
+}
+.cat-count{
+  font-family:var(--font-mono);
+  font-size:12px;
+  color:var(--accent);
+  background:color-mix(in srgb, var(--accent) 16%, transparent);
+  padding:2px 8px;
+  border-radius:10px;
+  flex-shrink:0;
+}
+.cat-line{
+  height:1px;
+  flex:1;
+  background:linear-gradient(to right, var(--line-soft), transparent);
+}
+
+/* ---------- CARD ---------- */
+.pub{
+  display:flex;
+  flex-direction:column;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  margin-bottom:20px;
+  overflow:hidden;
+  scroll-margin-top:130px;
+}
+.pub-thumb{
+  width:100%;
+  height:190px;
+  flex-shrink:0;
+  overflow:hidden;
+  background:var(--surface-soft);
+  border-bottom:1px solid var(--line);
+}
+.pub-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.pub-thumb-empty{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  color:var(--text-faint);
+  font-size:12px;
+  letter-spacing:.5px;
+}
+.pub-thumb-empty .eyebrow-icon{ opacity:.5; }
+.pub.hidden{ display:none; }
+@media (prefers-reduced-motion: no-preference){
+  .pub{ animation:riseIn .45s ease both; animation-delay:calc(var(--i,0) * 35ms); }
+}
+@keyframes riseIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+.pub-accent{ width:100%; height:4px; flex-shrink:0; background:var(--accent); }
+.pub-inner{ padding:22px 24px 24px; flex:1; min-width:0; }
+
+.pub-eyebrow{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:10px;
+  flex-wrap:wrap;
+}
+.eyebrow-icon{ width:16px; height:16px; color:var(--accent); flex-shrink:0; }
+.eyebrow-icon svg{ width:100%; height:100%; }
+.eyebrow-label{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+.eyebrow-ref{
+  margin-left:auto;
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--text-faint);
+  background:var(--surface-soft);
+  border:1px solid var(--line);
+  padding:2px 8px;
+  border-radius:6px;
+}
+
+.pub-title-text{
+  margin:0 0 16px;
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:clamp(20px, 3vw, 25px);
+  line-height:1.15;
+  color:var(--text);
+  letter-spacing:0.2px;
+}
+
+/* ---------- META ROW: price tag + spec list ---------- */
+.pub-meta{
+  display:flex;
+  align-items:stretch;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+  padding-bottom:20px;
+  border-bottom:1px dashed var(--line);
+}
+.price-tag{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:9px 16px 9px 20px;
+  clip-path:polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%);
+  background:var(--accent);
+  color:#16140C;
+  font-family:var(--font-mono);
+  flex-shrink:0;
+}
+.price-tag::before{
+  content:'';
+  position:absolute;
+  left:6px; top:50%;
+  width:4px; height:4px;
+  background:var(--surface);
+  border-radius:50%;
+  transform:translateY(-50%);
+}
+.price-tag .price-cur{ font-size:13px; font-weight:600; opacity:0.75; }
+.price-tag .price-num{ font-size:19px; font-weight:600; }
+.price-tag.ready .icon-copy-btn{
+  background:rgba(22,20,12,0.18);
+  border:none;
+  color:#16140C;
+  width:22px; height:22px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  margin-left:4px;
+  flex-shrink:0;
+}
+.price-tag.ready .icon-copy-btn:hover{ background:rgba(22,20,12,0.3); }
+.price-tag.ready .icon-copy-btn svg{ width:12px; height:12px; }
+
+.price-tag.pending{
+  background:transparent;
+  border:1.5px dashed var(--accent);
+  color:var(--accent);
+  clip-path:none;
+  border-radius:var(--radius-sm);
+  padding:8px 14px;
+}
+.price-tag.pending::before{ display:none; }
+.price-tag.pending .price-pending-label{
+  font-size:11.5px;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  font-weight:600;
+}
+
+.spec-list{
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:6px;
+  font-size:13px;
+  flex:1;
+  min-width:180px;
+}
+.spec-list .spec-row{ display:flex; gap:8px; }
+.spec-list dt{
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  min-width:74px;
+  flex-shrink:0;
+  padding-top:1px;
+}
+.spec-list dd{ margin:0; color:var(--text-dim); }
+
+/* ---------- FIELDS ---------- */
+.field{ margin-bottom:18px; }
+.field-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:7px;
+}
+.field-head span{
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--text-faint);
+}
+.btn-copy{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  background:var(--surface-soft);
+  border:1px solid var(--line);
+  color:var(--text-dim);
+  padding:5px 11px;
+  border-radius:7px;
+  font-size:11.5px;
+  font-weight:600;
+  font-family:var(--font-body);
+  cursor:pointer;
+  transition:border-color .15s, color .15s, transform .1s;
+}
+.btn-copy svg{ width:12px; height:12px; }
+.btn-copy:hover{ border-color:var(--accent); color:var(--text); }
+.btn-copy:active{ transform:scale(0.96); }
+.btn-copy.copied{ border-color:var(--accent); color:var(--accent); }
+
+.value-block{
+  background:var(--surface-soft);
+  border:1px solid var(--line);
+  border-radius:var(--radius-sm);
+  padding:11px 14px;
+  font-size:14px;
+  line-height:1.5;
+  color:var(--text);
+}
+.titulo-block{ font-weight:500; }
+.desc-block{
+  white-space:normal;
+  line-height:1.75;
+  cursor:text;
+  user-select:text;
+}
+.desc-block:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+.chip-wrap{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.chip{
+  font-size:12px;
+  padding:4px 11px;
+  border-radius:20px;
+  background:var(--surface-soft);
+  border:1px solid var(--line);
+  color:var(--text-dim);
+}
+
+.sku-rows{ display:flex; flex-direction:column; gap:6px; }
+.sku-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  background:var(--surface-soft);
+  border:1px solid var(--line);
+  border-radius:var(--radius-sm);
+  padding:9px 10px 9px 12px;
+}
+.sku-code{
+  font-family:var(--font-mono);
+  font-size:13px;
+  color:var(--text);
+  word-break:break-word;
+}
+.icon-copy-btn{
+  background:var(--surface-soft-2);
+  border:1px solid var(--line);
+  color:var(--text-dim);
+  width:28px; height:28px;
+  border-radius:7px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  flex-shrink:0;
+  transition:border-color .15s, color .15s;
+}
+.icon-copy-btn svg{ width:13px; height:13px; }
+.icon-copy-btn:hover{ border-color:var(--accent); color:var(--text); }
+.icon-copy-btn.copied{ border-color:var(--accent); color:var(--accent); }
+
+/* ---------- TIP ---------- */
+.tip-note{
+  --accent:var(--cat-servicio);
+  position:relative;
+  background:var(--surface-soft);
+  border:1px solid var(--line);
+  border-left:3px solid var(--accent);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  padding:11px 14px 11px 16px;
+  margin-top:4px;
+}
+.tip-note p{
+  margin:0;
+  font-size:12.5px;
+  color:var(--text-dim);
+  line-height:1.6;
+}
+.tip-note strong{ color:var(--accent); font-family:var(--font-mono); font-size:11px; letter-spacing:0.5px; text-transform:uppercase; }
+
+/* ---------- BACK TO TOP ---------- */
+.to-top{
+  position:fixed;
+  right:20px;
+  bottom:24px;
+  width:46px; height:46px;
+  border-radius:50%;
+  background:var(--surface-soft-2);
+  border:1px solid var(--line-soft);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s, transform .15s, border-color .15s;
+  z-index:60;
+}
+.to-top svg{ width:18px; height:18px; }
+.to-top.show{ opacity:1; pointer-events:auto; }
+.to-top:hover{ transform:translateY(-3px); border-color:var(--cat-servicio); }
+
+/* ---------- TOAST ---------- */
+#toast{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--cat-servicio);
+  color:#1A1604;
+  padding:10px 22px;
+  border-radius:8px;
+  font-size:13.5px;
+  font-weight:600;
+  font-family:var(--font-body);
+  opacity:0;
+  transition:.22s;
+  pointer-events:none;
+  z-index:999;
+}
+#toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ---------- FOOTER ---------- */
+footer{
+  max-width:900px;
+  margin:40px auto 0;
+  padding:20px;
+  text-align:center;
+  color:var(--text-faint);
+  font-size:12px;
+  border-top:1px solid var(--line);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:640px){
+  header{ padding:28px 16px 22px; }
+  .brand-box{ font-size:24px; padding:6px 14px; }
+  .container{ padding:22px 14px 0; }
+  .pub-inner{ padding:18px 16px 20px; }
+  .cat-divider h2{ font-size:17px; }
+  .pub-meta{ flex-direction:column; align-items:flex-start; }
+  .spec-list{ min-width:0; width:100%; }
+  .eyebrow-ref{ margin-left:0; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand-box">CREA</div>
+  <div class="brand-sub">Alfombras&nbsp;&amp;&nbsp;Pisos</div>
+  <div class="brand-tag">Catálogo Marketplace · Quito, Ecuador · Listo para copiar y pegar</div>
+</header>
+
+<div class="toolbar-wrap">
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" type="text" placeholder="Buscar producto: cortina, césped, logo, musgo…" autocomplete="off">
+    </div>
+    <div class="filter-pills" id="filterPills"></div>
+    <div class="result-count" id="resultCount"></div>
+  </div>
+</div>
+
+<div class="container" id="container"></div>
+
+<footer>CREA Alfombras &amp; Pisos — Versalles N21-157 y San Gregorio, Quito · WhatsApp 0969 484 145</footer>
+
+<button class="to-top" id="toTop" aria-label="Volver arriba">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<div id="toast">Copiado ✓</div>
+
+<script>
+const data = [
+  {
+    "name": "Alfombras Decorativas",
+    "cat": "textil",
+    "ref": "ALF-DEC",
+    "foto": "assets/textiles/ALF-DEC.png",
+    "titulo": "Alfombra Decorativa · 8 Diseños · 120x170cm · Sala y Comedor · Quito · Envío Nacional",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Hogar",
+    "estado": "Nuevo",
+    "descLines": [
+      "🏠 ALFOMBRAS DECORATIVAS — 8 DISEÑOS",
+      "📐 Medida: 120 cm x 170 cm",
+      "",
+      "Perfectas para sala, comedor, dormitorio o estudio. Diseños modernos que transforman cualquier espacio al instante.",
+      "",
+      "✅ INCLUYE:",
+      "• Textura suave y agradable al tacto",
+      "• Diseños modernos y elegantes",
+      "• Medida estándar 120 x 170 cm",
+      "• Disponibles en varios colores y estampados",
+      "",
+      "💡 USOS IDEALES:",
+      "• Sala de estar y comedor",
+      "• Dormitorios principales y juveniles",
+      "• Estudios y home office",
+      "• Áreas de juego para niños",
+      "",
+      "💬 Escríbenos indicando el número de foto del diseño que prefieres.",
+      "",
+      "📦 Envíos a todo el Ecuador",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145"
+    ],
+    "tags": [
+      "alfombra decorativa",
+      "alfombra sala",
+      "alfombra moderna",
+      "alfombra 120x170",
+      "tapete decorativo",
+      "alfombra hogar",
+      "alfombra Ecuador",
+      "alfombra Quito",
+      "alfombra dormitorio",
+      "decoración hogar",
+      "alfombra comedor",
+      "alfombra suave",
+      "alfombra gris",
+      "alfombra beige",
+      "alfombra estampada",
+      "alfombra juvenil",
+      "alfombra home office",
+      "alfombra varios diseños",
+      "tapete sala",
+      "envío nacional"
+    ],
+    "skus": [
+      "ALF-DEC-120-001"
+    ],
+    "tip": "Sube las 8 fotos en una sola publicación (carrusel). Pide al comprador que indique el número de foto del diseño que le gusta."
+  },
+  {
+    "name": "Cortinas de Baño — 10 Diseños",
+    "cat": "agua",
+    "ref": "CORT-180",
+    "titulo": "Cortina de Baño · 10 Diseños · 180x180cm · PEVA Impermeable · Ganchos Incluidos · Quito · Envío",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Hogar",
+    "estado": "Nuevo",
+    "descLines": [
+      "🚿 CORTINAS PARA BAÑO — 10 DISEÑOS",
+      "📐 Medida: 180 cm x 180 cm",
+      "",
+      "Renueva tu baño de forma fácil y económica. Material PEVA impermeable de alta calidad.",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Material PEVA 100% impermeable",
+      "• Medida estándar 180 x 180 cm",
+      "• Incluye 12 ganchos de instalación",
+      "• Fácil de instalar y limpiar",
+      "• Resistente al moho y humedad",
+      "",
+      "🎨 DISEÑOS DISPONIBLES:",
+      "Floral azul · Rayas marineras · Estrellas de mar · Hojas tropicales · Ginkgo · Peces · Flores navy · Manchas grises · Trazos · Puntos de colores",
+      "",
+      "💡 PERFECTA PARA:",
+      "• Baños con tina o ducha",
+      "• Regalos prácticos para el hogar",
+      "• Renovación rápida del baño",
+      "",
+      "💬 Escríbenos indicando el número de foto del diseño que prefieres.",
+      "",
+      "📦 Envíos a todo el Ecuador",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145"
+    ],
+    "tags": [
+      "cortina de baño",
+      "cortina baño 180x180",
+      "cortina ducha",
+      "shower curtain",
+      "cortina impermeable",
+      "cortina PEVA",
+      "cortina con ganchos",
+      "baño decoración",
+      "cortina bañera",
+      "cortina 180",
+      "cortina Quito",
+      "cortina Ecuador",
+      "cortina floral",
+      "cortina moderna",
+      "cortina hogar",
+      "decoración baño",
+      "baño moderno",
+      "accesorios baño",
+      "envío nacional",
+      "cortina antimoho"
+    ],
+    "skus": [
+      "CORT-BAN-PEVA-180-001"
+    ],
+    "tip": "Producto de reposición frecuente — hay demanda constante. Sube las 10 fotos y pide el número de diseño preferido."
+  },
+  {
+    "name": "Cortinas de Baño — $6.99",
+    "cat": "agua",
+    "ref": "CORT-699",
+    "titulo": "Cortina de Baño · 180x180cm · Impermeable PEVA · Incluye Ganchos · Varios Diseños · Quito · Envío",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Hogar",
+    "estado": "Nuevo",
+    "descLines": [
+      "🚿 CORTINA PARA BAÑO — VARIOS DISEÑOS",
+      "📐 Medida: 180 cm x 180 cm",
+      "",
+      "✅ INCLUYE 12 GANCHOS DE INSTALACIÓN",
+      "✅ Material PEVA 100% impermeable",
+      "✅ Resistente al moho y a la humedad",
+      "✅ Fácil de instalar y limpiar",
+      "✅ Lista para usar desde el primer día",
+      "",
+      "🎨 DISEÑOS DISPONIBLES:",
+      "Floral azul · Rayas marineras · Estrellas de mar · Hojas tropicales · Ginkgo verde · Peces · Flores navy · Manchas grises · Trazos · Puntos de colores",
+      "",
+      "💬 Escríbenos por WhatsApp indicando el NÚMERO DE FOTO del diseño que prefieres y te confirmamos disponibilidad.",
+      "",
+      "📦 Envíos a todo el Ecuador",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145"
+    ],
+    "tags": [
+      "cortina de baño",
+      "cortina baño 180x180",
+      "cortina ducha",
+      "shower curtain",
+      "cortina impermeable",
+      "cortina PEVA",
+      "cortina con ganchos",
+      "baño decoración",
+      "cortina bañera",
+      "cortina 180",
+      "cortina Quito",
+      "cortina Ecuador",
+      "cortina floral",
+      "cortina moderna",
+      "cortina hogar",
+      "decoración baño",
+      "baño moderno",
+      "accesorios baño",
+      "envío nacional",
+      "cortina antimoho"
+    ],
+    "skus": [
+      "CORT-BAN-PEVA-699-002"
+    ],
+    "tip": "Mencionar 'incluye 12 ganchos' justifica el precio frente a competidores que venden solo la cortina a $3."
+  },
+  {
+    "name": "Tapizón para Eventos y Ferias",
+    "cat": "textil",
+    "ref": "TAP-GRS",
+    "titulo": "Tapizón Gris por m² · Stands, Ferias y Eventos · Instalación Profesional · Quito · Envío Nacional",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Hogar",
+    "estado": "Nuevo",
+    "descLines": [
+      "🎪 TAPIZÓN PARA FERIAS Y EVENTOS",
+      "🎨 Color: Gris oscuro elegante",
+      "",
+      "¿Necesitas cubrir el piso de tu stand o evento con una alfombra profesional?",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Color gris oscuro elegante",
+      "• Venta por metros o rollos completos",
+      "• Instalación profesional disponible",
+      "• Envíos a nivel nacional",
+      "",
+      "🏆 IDEAL PARA:",
+      "• Stands y ferias comerciales",
+      "• Eventos corporativos",
+      "• Exposiciones y convenciones",
+      "• Inauguraciones y lanzamientos",
+      "",
+      "🏅 ¿POR QUÉ ELEGIRNOS?",
+      "• 40 años de experiencia en el mercado",
+      "• Personal altamente capacitado",
+      "• Cotizaciones sin compromiso",
+      "",
+      "💬 Escríbenos con las medidas que necesitas y te enviamos el presupuesto en minutos.",
+      "",
+      "📦 Envíos a todo el Ecuador",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145"
+    ],
+    "tags": [
+      "tapizón",
+      "alfombra para eventos",
+      "alfombra stands",
+      "tapizón ferias",
+      "piso para feria",
+      "alfombra gris",
+      "alfombra por metros",
+      "tapizón Quito",
+      "alfombra Ecuador",
+      "piso stand",
+      "tapizón eventos",
+      "alfombra feria comercial",
+      "instalación alfombra",
+      "alfombra rollo",
+      "piso exposición",
+      "alfombra corporativa",
+      "tapizón gris",
+      "carpet events",
+      "alfombra por m2",
+      "envío nacional"
+    ],
+    "skus": [
+      "TAP-GRS-M2-001"
+    ],
+    "tip": "Resalta los 40 años de experiencia — es tu diferenciador frente a competidores nuevos en el mercado."
+  },
+  {
+    "name": "Alfombras Publicitarias con Logo",
+    "cat": "textil",
+    "ref": "ALF-PUB",
+    "foto": "assets/textiles/ALF-PUB.png",
+    "titulo": "Alfombras Publicitarias con Logo · Alto Tráfico · Empresas y Negocios · Cotiza · Envío Nacional",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Hogar",
+    "estado": "Nuevo",
+    "descLines": [
+      "🏢 ALFOMBRAS PUBLICITARIAS CON TU LOGO",
+      "🎯 Fabricamos tu alfombra con el diseño de tu marca",
+      "",
+      "La primera impresión de tu negocio empieza en la entrada. Una alfombra con tu logo comunica profesionalismo y refuerza tu identidad de marca desde el primer paso.",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Material de alto tráfico y larga duración",
+      "• Base antideslizante y antialérgica",
+      "• Personalización total: logo, texto, colores y diseño",
+      "• Variedad de tamaños a pedido",
+      "• Acabado profesional con bordes definidos",
+      "• Fácil limpieza y mantenimiento",
+      "",
+      "🏆 IDEAL PARA:",
+      "• Empresas, corporaciones y franquicias",
+      "• Locales comerciales y restaurantes",
+      "• Hoteles, clínicas y oficinas",
+      "• Consultorios e instituciones públicas",
+      "• Hogares con diseño exclusivo",
+      "",
+      "💰 PRECIO POR COTIZACIÓN",
+      "El valor depende de la medida y diseño.",
+      "",
+      "💬 Escríbenos con tu logo en PNG y la medida que necesitas. Te enviamos el presupuesto en minutos, sin compromiso.",
+      "",
+      "📦 Envíos a todo el Ecuador",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145"
+    ],
+    "tags": [
+      "alfombras publicitarias",
+      "alfombra con logo",
+      "alfombra personalizada",
+      "alfombra empresarial",
+      "alfombra alto tráfico",
+      "alfombra antideslizante",
+      "alfombra para negocio",
+      "alfombra entrada local",
+      "alfombra corporativa",
+      "alfombra con bordes",
+      "felpudo personalizado",
+      "alfombra publicitaria Quito",
+      "logo en alfombra",
+      "branding entrada",
+      "alfombra franquicia",
+      "alfombra empresa Ecuador",
+      "custom logo mat",
+      "decoración empresarial",
+      "alfombra a medida",
+      "envío nacional Ecuador"
+    ],
+    "skus": [
+      "ALF-PUB-LOGO-HT-001"
+    ],
+    "tip": "Responde rápido: pregunta medida, logo en PNG y fecha que necesita. Esto convierte la consulta en venta casi segura."
+  },
+  {
+    "name": "Césped Artificial",
+    "cat": "verde",
+    "ref": "CESP-ART",
+    "titulo": "Césped Artificial por m² · Jardines y Terrazas · Instalación Profesional · Quito · Envío Nacional",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Jardinería",
+    "estado": "Nuevo",
+    "descLines": [
+      "🌿 CÉSPED ARTIFICIAL — Por m²",
+      "💚 Verde todo el año sin mantenimiento",
+      "",
+      "Transforma tu jardín, terraza o balcón sin riego ni corte. Solución duradera para espacios interiores y exteriores.",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Sin mantenimiento ni riego",
+      "• Verde permanente todo el año",
+      "• Fácil limpieza",
+      "• Resistente al sol y a la lluvia",
+      "• Instalación profesional disponible",
+      "",
+      "💡 IDEAL PARA:",
+      "• Jardines y patios",
+      "• Terrazas y balcones",
+      "• Áreas de juego para niños",
+      "• Locales comerciales y oficinas",
+      "• Eventos y decoraciones",
+      "",
+      "📐 Venta por metros cuadrados",
+      "🔧 Instalación profesional disponible",
+      "",
+      "💬 Escríbenos con las medidas de tu espacio y te cotizamos sin compromiso.",
+      "",
+      "📦 Envíos a todo el Ecuador",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145"
+    ],
+    "tags": [
+      "césped artificial",
+      "pasto artificial",
+      "jardín artificial",
+      "grass sintético",
+      "césped terraza",
+      "césped balcón",
+      "césped por m2",
+      "césped Quito",
+      "césped Ecuador",
+      "pasto sintético",
+      "jardín sin riego",
+      "césped decorativo",
+      "césped interior",
+      "césped exterior",
+      "instalación césped",
+      "artificial grass",
+      "césped para niños",
+      "decoración jardín",
+      "césped hogar",
+      "envío nacional"
+    ],
+    "skus": [
+      "CESP-ART-VRD-001"
+    ],
+    "tip": "El precio de entrada bajo ($3/m²) atrae el clic; la instalación profesional es donde generas el margen real."
+  },
+  {
+    "name": "Alfombras Publicitarias (Full Color)",
+    "cat": "textil",
+    "ref": "ALFPUB-FC",
+    "foto": "assets/textiles/ALFPUB-FC.png",
+    "titulo": "Alfombras Publicitarias Personalizadas con Tu Logo | Empresas y Negocios",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Hogar",
+    "estado": "Nuevo",
+    "descLines": [
+      "🔥 ALFOMBRAS PUBLICITARIAS PERSONALIZADAS — COTIZA AHORA",
+      "",
+      "¿Buscas darle una imagen profesional a tu negocio? Fabricamos alfombras publicitarias con tu logo, colores y diseño exclusivo.",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Alta resistencia al tráfico",
+      "• Base antideslizante y antipolvo",
+      "• Impresión full color con tu logo",
+      "• Bordes reforzados",
+      "• Variedad de tamaños y colores",
+      "• Ideales para interiores y exteriores",
+      "",
+      "🏢 IDEAL PARA:",
+      "→ Negocios y locales comerciales",
+      "→ Empresas y corporaciones",
+      "→ Hoteles y restaurantes",
+      "→ Clínicas y consultorios",
+      "→ Gimnasios y oficinas",
+      "→ Eventos y stands",
+      "",
+      "📐 MEDIDAS DISPONIBLES:",
+      "• 60x90 cm | 80x120 cm | 100x150 cm",
+      "• Medidas personalizadas bajo pedido",
+      "",
+      "💬 ¿Cómo pedir?",
+      "1️⃣ Escríbenos por WhatsApp",
+      "2️⃣ Envíanos tu logo y medida",
+      "3️⃣ Te enviamos diseño y cotización GRATIS",
+      "",
+      "📦 Envíos a todo el Ecuador",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145",
+      "",
+      "⚡ ENTREGA RÁPIDA | CALIDAD GARANTIZADA"
+    ],
+    "tags": [
+      "alfombras publicitarias",
+      "alfombras personalizadas",
+      "alfombras con logo",
+      "alfombras para empresas",
+      "alfombras corporativas",
+      "felpudos publicitarios",
+      "alfombras de entrada",
+      "rotulación",
+      "publicidad",
+      "alfombras quito",
+      "alfombras negocios",
+      "alfombras alta resistencia",
+      "impresión full color"
+    ],
+    "skus": [
+      "ALFPUB-CREA-001 (estándar)",
+      "ALFPUB-CREA-002 (con bordes)",
+      "ALFPUB-CREA-003 (premium)"
+    ],
+    "tip": "Precio $1 o 'Gratis cotizar' para aparecer arriba en los filtros. Sube las 10 fotos permitidas. Republica cada 3-4 días."
+  },
+  {
+    "name": "Césped Artificial de Colores",
+    "cat": "verde",
+    "ref": "CESP-COL",
+    "titulo": "Césped Artificial de Colores 15mm y 20mm | Jardines y Terrazas | Envío Ecuador",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Jardinería",
+    "estado": "Nuevo",
+    "descLines": [
+      "🌈 CÉSPED ARTIFICIAL DE COLORES — TRANSFORMA TU ESPACIO",
+      "",
+      "¿Quieres un jardín, terraza o zona de juegos diferente y llena de color? Tenemos el césped perfecto para ti.",
+      "",
+      "💰 PRECIOS DISPONIBLES:",
+      "• 15mm → $6,99 /m²",
+      "• 20mm → $9,99 /m²",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Colores disponibles: Verde, Azul, Rojo y más",
+      "• Alta resistencia al uso diario",
+      "• Duradero y de fácil mantenimiento",
+      "• Base antideslizante",
+      "• Resistente a rayos UV",
+      "• No requiere riego ni corte",
+      "",
+      "🏡 IDEAL PARA:",
+      "→ Jardines y terrazas",
+      "→ Zonas de juegos infantiles",
+      "→ Decoración de eventos",
+      "→ Gimnasios y áreas deportivas",
+      "→ Balcones y patios",
+      "→ Decoración comercial",
+      "",
+      "📐 MEDIDAS:",
+      "• Venta por metro cuadrado",
+      "• Cortes personalizados disponibles",
+      "",
+      "🚚 ENVIAMOS A TODO EL ECUADOR",
+      "📦 Empaque seguro garantizado",
+      "",
+      "💬 ¿Cómo comprar?",
+      "1️⃣ Escríbenos por WhatsApp",
+      "2️⃣ Indícanos color, grosor y m²",
+      "3️⃣ Cotización y diseño GRATIS",
+      "",
+      "📍 Quito — Versalles N21-157 y San Gregorio, sector Santa Clara",
+      "📱 WhatsApp: 0969 484 145",
+      "",
+      "⚡ ENTREGA RÁPIDA | CALIDAD GARANTIZADA"
+    ],
+    "tags": [
+      "césped artificial",
+      "césped de colores",
+      "pasto sintético",
+      "césped decorativo",
+      "pasto artificial colores",
+      "césped azul rojo verde",
+      "jardín artificial",
+      "terraza césped",
+      "zona de juegos césped",
+      "césped quito",
+      "pasto sintético ecuador",
+      "decoración jardín",
+      "césped metro cuadrado"
+    ],
+    "skus": [
+      "CESP-15MM-001 (estándar)",
+      "CESP-20MM-002 (premium)",
+      "CESP-COL-003 (color especial)"
+    ],
+    "tip": "Precio $6,99 (el más bajo) para aparecer primero. Categoría Casa y jardín → Jardinería. Menciona 'Todo el Ecuador'."
+  },
+  {
+    "name": "Caminos Decorativos",
+    "cat": "textil",
+    "ref": "CAM-DEC",
+    "foto": "assets/textiles/CAM-DEC.png",
+    "titulo": "Caminos Decorativos Residenciales, Comerciales y para Eventos | Envíos Todo Ecuador",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Hogar",
+    "estado": "Nuevo",
+    "descLines": [
+      "✨ CAMINOS DECORATIVOS — TRANSFORMA CUALQUIER ESPACIO",
+      "",
+      "Dale elegancia y sofisticación a tu hogar, negocio o evento con nuestros caminos decorativos de alta calidad.",
+      "",
+      "🏡 TIPOS DISPONIBLES:",
+      "• Residenciales – Sala, comedor, pasillos, dormitorios",
+      "• Comerciales – Locales, hoteles, restaurantes, oficinas",
+      "• Eventos – Bodas, grados, celebraciones, stands",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Variedad de diseños, colores y texturas",
+      "• Alta durabilidad y resistencia",
+      "• Fácil mantenimiento y limpieza",
+      "• Antideslizante",
+      "• Medidas estándar y personalizadas",
+      "• Material premium de larga duración",
+      "",
+      "🎯 IDEAL PARA:",
+      "→ Pasillos y escaleras residenciales",
+      "→ Salas y comedores",
+      "→ Recepciones de empresas y hoteles",
+      "→ Alfombras para bodas y eventos",
+      "→ Decoración de locales comerciales",
+      "→ Stands y ferias",
+      "",
+      "📐 MEDIDAS:",
+      "• Venta por metro lineal",
+      "• Anchos disponibles: 80cm | 1m | 1,20m | Personalizado",
+      "• Largo a medida según necesidad",
+      "",
+      "🚚 ENVIAMOS A TODO EL ECUADOR",
+      "📦 Empaque cuidadoso garantizado",
+      "",
+      "💬 ¿Cómo pedir?",
+      "1️⃣ Escríbenos por WhatsApp",
+      "2️⃣ Cuéntanos el espacio y medidas",
+      "3️⃣ Te asesoramos y cotizamos GRATIS",
+      "",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145",
+      "🏢 CREA Alfombras & Pisos",
+      "⚡ CALIDAD GARANTIZADA | ENTREGA RÁPIDA"
+    ],
+    "tags": [
+      "caminos decorativos",
+      "alfombra pasillo",
+      "camino de alfombra",
+      "caminos para sala",
+      "caminos para eventos",
+      "alfombra boda",
+      "caminos residenciales",
+      "caminos comerciales",
+      "alfombra corredor",
+      "caminos quito",
+      "decoración hogar alfombra",
+      "caminos personalizados",
+      "alfombras y pisos quito",
+      "camino escalera"
+    ],
+    "skus": [
+      "CAM-RES-001 (residencial)",
+      "CAM-COM-002 (comercial)",
+      "CAM-EVE-003 (eventos)",
+      "CAM-CUST-004 (personalizado)"
+    ],
+    "tip": "Precio $1 o por metro. Sube 10 fotos: sala, pasillo, boda, hotel."
+  },
+  {
+    "name": "Alfombras Pared a Pared",
+    "cat": "textil",
+    "ref": "APP-STD",
+    "foto": "assets/textiles/APP-STD.png",
+    "titulo": "Alfombras Pared a Pared Instaladas | Texturas y Diseños Exclusivos | Envíos Ecuador",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Hogar",
+    "estado": "Nuevo",
+    "descLines": [
+      "🏡 ALFOMBRAS PARED A PARED — ELEGANCIA Y CONFORT EN CADA ESPACIO",
+      "",
+      "Transforma completamente cualquier habitación con nuestra exclusiva selección de alfombras pared a pared. Texturas y diseños sofisticados para elevar tu ambiente.",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Amplia variedad de texturas y colores",
+      "• Alta densidad y suavidad al tacto",
+      "• Excelente aislamiento térmico y acústico",
+      "• Fácil mantenimiento y limpieza",
+      "• Resistente al uso diario",
+      "• Instalación profesional disponible",
+      "",
+      "🏠 IDEAL PARA:",
+      "→ Dormitorios y salas de estar",
+      "→ Oficinas y salas de reuniones",
+      "→ Hoteles y suites",
+      "→ Estudios y bibliotecas",
+      "→ Cuartos de niños",
+      "→ Espacios comerciales premium",
+      "",
+      "📐 DISPONIBLE EN:",
+      "• Venta por metro cuadrado",
+      "• Instalación en medidas exactas de tu espacio",
+      "• Asesoría de diseño incluida sin costo",
+      "",
+      "🚚 ENVIAMOS A TODO EL ECUADOR",
+      "🔧 Servicio de instalación disponible en Quito",
+      "",
+      "💬 ¿Cómo pedir?",
+      "1️⃣ Escríbenos por WhatsApp",
+      "2️⃣ Cuéntanos las medidas de tu espacio",
+      "3️⃣ Te asesoramos y cotizamos GRATIS",
+      "",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145",
+      "🏢 CREA Alfombras & Pisos",
+      "⚡ CALIDAD PREMIUM | ENTREGA Y ASESORÍA GARANTIZADA"
+    ],
+    "tags": [
+      "alfombra pared a pared",
+      "moqueta",
+      "alfombra para dormitorio",
+      "alfombra para sala",
+      "alfombra instalada",
+      "alfombra por metro",
+      "alfombra quito",
+      "alfombra residencial",
+      "alfombra oficina",
+      "alfombra hotel",
+      "piso alfombrado",
+      "alfombra suave",
+      "alfombra aislante",
+      "alfombras y pisos quito",
+      "alfombra premium ecuador"
+    ],
+    "skus": [
+      "APP-STD-001 (estándar)",
+      "APP-PRE-002 (premium)",
+      "APP-INST-003 (con instalación)",
+      "APP-COM-004 (oficina/comercial)"
+    ],
+    "tip": "Resalta 'instalación profesional' como diferenciador. Define el precio por m² antes de publicar — Facebook exige un número."
+  },
+  {
+    "name": "Tapizón de Colores",
+    "cat": "textil",
+    "ref": "TAP-COL",
+    "titulo": "Tapizón de Colores para Stands, Ferias y Eventos | Alquiler y Venta | Envíos Ecuador",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Hogar",
+    "estado": "Nuevo",
+    "descLines": [
+      "🎪 TAPIZÓN DE COLORES — LA SOLUCIÓN PROFESIONAL PARA TU EVENTO",
+      "",
+      "¿Tienes un stand de feria, evento o exposición? Nuestro tapizón de colores le da el toque profesional que tu marca necesita.",
+      "",
+      "🎨 COLORES DISPONIBLES:",
+      "• Rojo | Azul | Amarillo | Gris | Verde | Negro",
+      "• Y muchos más colores disponibles",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Alta resistencia al tráfico intenso",
+      "• Fácil instalación y retiro",
+      "• Superficie uniforme y profesional",
+      "• Disponible en rollos completos o por metro",
+      "• Ideal para uso temporal y permanente",
+      "• Excelente relación calidad/precio",
+      "",
+      "🏢 IDEAL PARA:",
+      "→ Stands de ferias y exposiciones",
+      "→ Eventos corporativos y lanzamientos",
+      "→ Bodas, grados y celebraciones",
+      "→ Congresos y conferencias",
+      "→ Alfombra roja para eventos",
+      "→ Locales comerciales temporales",
+      "→ Instalaciones deportivas",
+      "",
+      "📐 MEDIDAS DISPONIBLES:",
+      "• Venta por metro cuadrado o lineal",
+      "• Rollos completos con descuento",
+      "• Ancho estándar: 2m | Largo a medida",
+      "",
+      "🚚 ENVIAMOS A TODO EL ECUADOR",
+      "⚡ Entrega express disponible para eventos urgentes",
+      "",
+      "💬 ¿Cómo pedir?",
+      "1️⃣ Escríbenos por WhatsApp",
+      "2️⃣ Indica color, medidas y fecha del evento",
+      "3️⃣ Cotización inmediata SIN COSTO",
+      "",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145",
+      "🏢 CREA Alfombras & Pisos",
+      "⚡ STOCK INMEDIATO | ENTREGA RÁPIDA"
+    ],
+    "tags": [
+      "tapizón",
+      "tapizón de colores",
+      "alfombra para eventos",
+      "alfombra para ferias",
+      "tapizón stand",
+      "alfombra feria",
+      "tapizón rojo",
+      "alfombra roja evento",
+      "tapizón quito",
+      "alfombra para stands",
+      "tapizón por metro",
+      "alfombra corporativa",
+      "tapizón ecuador",
+      "alfombra exposición",
+      "piso para eventos"
+    ],
+    "skus": [
+      "TAP-ROJO-001",
+      "TAP-AZUL-002",
+      "TAP-AMAR-003",
+      "TAP-GRIS-004",
+      "TAP-NEGR-005",
+      "TAP-CUST-006 (color especial)"
+    ],
+    "tip": "Precio por m² o $1. Menciona 'entrega express' — los eventos son urgentes. Republica antes de fines de semana."
+  },
+  {
+    "name": "Moqueta PVC Tipo Moneda",
+    "cat": "tecnico",
+    "ref": "PVC-MON",
+    "titulo": "Moqueta PVC Tipo Moneda Gris | Bodegas, Industrias y Gimnasios | Envíos Ecuador",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Herramientas (o Hogar)",
+    "estado": "Nuevo",
+    "descLines": [
+      "⚙️ MOQUETA PVC TIPO MONEDA — RESISTENCIA Y SEGURIDAD INDUSTRIAL",
+      "",
+      "El piso antideslizante ideal para espacios de alto tráfico y exigencia. Resistente, duradero y seguro.",
+      "",
+      "💰 PRECIO DESDE $3,99 el metro lineal",
+      "",
+      "📐 MEDIDAS DEL ROLLO:",
+      "• 15 metros de largo x 1,30 metros de ancho",
+      "• Venta por metro lineal o rollo completo",
+      "",
+      "🎨 COLOR DISPONIBLE:",
+      "• Gris industrial",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Textura tipo moneda antideslizante",
+      "• Alta resistencia a impactos y cargas pesadas",
+      "• Material PVC de alta durabilidad",
+      "• Fácil limpieza y mantenimiento",
+      "• Resistente a aceites, grasas y químicos",
+      "• Aislante térmico y acústico",
+      "• Larga vida útil",
+      "",
+      "🏭 IDEAL PARA:",
+      "→ Bodegas y almacenes",
+      "→ Industrias y plantas de producción",
+      "→ Gimnasios y áreas de entrenamiento",
+      "→ Garajes y parqueaderos",
+      "→ Talleres mecánicos",
+      "→ Cocinas industriales",
+      "→ Pasillos de alto tráfico",
+      "",
+      "🚚 ENVÍOS A NIVEL NACIONAL",
+      "📦 Rollo completo con empaque seguro",
+      "",
+      "💬 ¿Cómo pedir?",
+      "1️⃣ Escríbenos por WhatsApp",
+      "2️⃣ Indica los metros que necesitas",
+      "3️⃣ Cotización inmediata GRATIS",
+      "",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145",
+      "🏢 CREA Alfombras & Pisos",
+      "⚡ STOCK DISPONIBLE | ENTREGA INMEDIATA"
+    ],
+    "tags": [
+      "moqueta pvc",
+      "piso tipo moneda",
+      "caucho tipo moneda",
+      "piso antideslizante",
+      "moqueta industrial",
+      "piso para bodega",
+      "piso para gimnasio",
+      "piso caucho quito",
+      "moqueta gris",
+      "piso pvc rollo",
+      "caucho para taller",
+      "piso industrial ecuador",
+      "piso antideslizante quito",
+      "moqueta por metro",
+      "piso para garaje",
+      "caucho industrial"
+    ],
+    "skus": [
+      "PVC-MON-GR-001 (por metro)",
+      "PVC-MON-ROLL-002 (rollo completo 15ml)"
+    ],
+    "tip": "El precio exacto $3,99 genera más clics que precios redondos. Sube fotos: rollo, textura de cerca, instalado en bodega/gym."
+  },
+  {
+    "name": "Césped Sintético (Pared, Patio, Interior, Básico)",
+    "cat": "verde",
+    "ref": "CSPED-MULTI",
+    "titulo": "Césped Sintético para Pared, Patio, Interior y Jardín | Instalación | Envíos Ecuador",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Jardinería",
+    "estado": "Nuevo",
+    "descLines": [
+      "🌿 CÉSPED SINTÉTICO — VERDE TODO EL AÑO SIN MANTENIMIENTO",
+      "",
+      "Dale vida a cualquier espacio con nuestro césped sintético de alta calidad. Sin riego, sin corte, sin complicaciones. ¡Siempre perfecto!",
+      "",
+      "🌱 TIPOS DISPONIBLES:",
+      "• PARED – Jardines verticales decorativos",
+      "• PATIO – Resistente para exteriores",
+      "• INTERIOR – Suave y estético para interiores",
+      "• BÁSICO – Económico para jardines y terrazas",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Aspecto natural ultra realista",
+      "• Resistente a rayos UV",
+      "• No requiere riego ni corte",
+      "• Fácil instalación y limpieza",
+      "• Alta durabilidad y resistencia",
+      "• Apto para interiores y exteriores",
+      "• Antialérgico y libre de mantenimiento",
+      "",
+      "🏡 IDEAL PARA:",
+      "→ Jardines verticales en paredes",
+      "→ Patios y terrazas",
+      "→ Salas y espacios interiores",
+      "→ Fachadas decorativas",
+      "→ Áreas de juego infantil",
+      "→ Eventos y decoración",
+      "→ Locales y oficinas",
+      "",
+      "📐 MEDIDAS:",
+      "• Venta por metro cuadrado",
+      "• Rollos en distintos anchos",
+      "• Cortes a medida disponibles",
+      "",
+      "🚚 ENVIAMOS A TODO EL ECUADOR",
+      "📍 Junto a la ferretería STIHL, sector Santa Clara",
+      "",
+      "💬 ¿Cómo pedir?",
+      "1️⃣ Escríbenos por WhatsApp",
+      "2️⃣ Dinos el tipo y los m² que necesitas",
+      "3️⃣ Te cotizamos al instante GRATIS",
+      "",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145",
+      "🏢 CREA Alfombras & Pisos",
+      "⚡ STOCK DISPONIBLE | ASESORÍA GRATUITA"
+    ],
+    "tags": [
+      "césped sintético",
+      "pasto artificial",
+      "jardín vertical",
+      "césped para pared",
+      "pasto sintético quito",
+      "césped artificial exterior",
+      "césped interior",
+      "jardín artificial",
+      "pasto para patio",
+      "césped sin mantenimiento",
+      "césped decorativo",
+      "pasto artificial ecuador",
+      "jardín vertical quito",
+      "césped para terraza",
+      "grass sintético"
+    ],
+    "skus": [
+      "CSPED-PAR-001 (pared/vertical)",
+      "CSPED-PAT-002 (patio exterior)",
+      "CSPED-INT-003 (interior)",
+      "CSPED-BAS-004 (básico jardín)"
+    ],
+    "tip": "Resalta los 4 tipos disponibles — pocos vendedores los ofrecen todos. Define el precio por m² antes de publicar."
+  },
+  {
+    "name": "Renovación de Bordes para Alfombras (Servicio)",
+    "cat": "servicio",
+    "ref": "SERV-ORI",
+    "titulo": "Renovación de Bordes para Alfombras | Costura Artesanal Antes y Después | Quito",
+    "precio": "Definir precio al publicar",
+    "categoria": "Anuncios clasificados → Varios (o Servicios)",
+    "estado": "No aplica — servicio",
+    "descLines": [
+      "🪡 RENUEVA LOS BORDES DE TU ALFOMBRA — COSTURA ARTESANAL",
+      "",
+      "¿Tu alfombra tiene los bordes gastados, deshilachados o maltratados? Le damos una segunda vida con un acabado elegante y resistente.",
+      "",
+      "✨ TRANSFORMAMOS:",
+      "Orillas gastadas en bordes elegantes y duraderos con costura artesanal de alta calidad.",
+      "",
+      "✅ BENEFICIOS:",
+      "• Ideal para reparación de alfombras dañadas",
+      "• Mejora la estética y presentación",
+      "• Mayor duración y resistencia al uso",
+      "• Variedad de colores de hilo para el borde",
+      "• Costura firme y profesional",
+      "• Recuperamos alfombras que parecían perdidas",
+      "",
+      "🏠 IDEAL PARA:",
+      "→ Alfombras residenciales gastadas",
+      "→ Tapetes y alfombras decorativas",
+      "→ Alfombras de hoteles y negocios",
+      "→ Alfombras heredadas o de valor sentimental",
+      "→ Restauración antes de vender o reutilizar",
+      "",
+      "🔧 PROCESO:",
+      "1️⃣ Nos envías o traes tu alfombra",
+      "2️⃣ Evaluamos el estado de los bordes",
+      "3️⃣ Aplicamos costura artesanal con orillo nuevo",
+      "4️⃣ Recibes tu alfombra como nueva",
+      "",
+      "💬 ¿Cómo cotizar?",
+      "1️⃣ Escríbenos por WhatsApp",
+      "2️⃣ Envíanos foto de tu alfombra",
+      "3️⃣ Te damos cotización y tiempo de entrega",
+      "",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145",
+      "🏢 CREA Alfombras & Pisos",
+      "⚡ ANTES Y DESPUÉS GARANTIZADO"
+    ],
+    "tags": [
+      "reparación de alfombras",
+      "orillado de alfombras",
+      "bordado de alfombras",
+      "restauración de alfombras",
+      "costura de alfombras",
+      "arreglo de tapetes",
+      "mantenimiento de alfombras",
+      "alfombras quito",
+      "servicio de costura",
+      "renovación de bordes",
+      "reparar alfombra gastada",
+      "taller de alfombras",
+      "costura artesanal",
+      "alfombras y pisos quito"
+    ],
+    "skus": [
+      "SERV-ORI-001 (orillado básico, 1 lado)",
+      "SERV-ORI-002 (orillado completo, 4 lados)",
+      "SERV-REP-ORI-003 (reparación + orillado)"
+    ],
+    "tip": "Sube varias fotos de antes/después y primeros planos del hilo. Define el monto 'Desde $X' antes de publicar."
+  },
+  {
+    "name": "Jardines Verticales Sintéticos",
+    "cat": "verde",
+    "ref": "JARD-VERT",
+    "titulo": "Jardines Verticales Sintéticos · Mediterráneo, Tropical y Helechos · Quito · Envío Nacional",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Jardinería",
+    "estado": "Nuevo",
+    "descLines": [
+      "🌿 JARDINES VERTICALES SINTÉTICOS",
+      "",
+      "Aporta vida, diseño y frescura a cualquier espacio con jardines verticales sintéticos de alta calidad — sin mantenimiento y siempre perfectos.",
+      "",
+      "🎨 DISEÑOS DISPONIBLES:",
+      "• Mediterráneo",
+      "• Tropical Rojo",
+      "• Helechos",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Material sintético de alta calidad y aspecto realista",
+      "• No requiere riego, poda ni mantenimiento",
+      "• Resistente a rayos UV — no se decolora con el tiempo",
+      "• Diseño personalizado según el espacio",
+      "• Ideal para interiores y exteriores",
+      "• Iluminación LED opcional para mayor impacto visual",
+      "",
+      "💡 IDEAL PARA:",
+      "• Salas y recepciones",
+      "• Restaurantes y cafeterías",
+      "• Oficinas y locales comerciales",
+      "• Balcones y terrazas",
+      "",
+      "💬 Escríbenos con las medidas de tu espacio y el diseño que prefieres para cotizarte sin compromiso.",
+      "",
+      "📦 Envíos a nivel nacional",
+      "📍 Quito — Versalles y San Gregorio",
+      "📱 WhatsApp: 0969 484 145"
+    ],
+    "tags": [
+      "jardín vertical",
+      "jardín vertical sintético",
+      "jardín vertical artificial",
+      "muro verde artificial",
+      "jardinería vertical",
+      "decoración con plantas artificiales",
+      "jardín vertical quito",
+      "plantas artificiales pared",
+      "jardín vertical oficina",
+      "jardín vertical interior",
+      "jardín vertical exterior",
+      "muro vegetal sintético",
+      "jardín vertical restaurante",
+      "decoración pared artificial",
+      "jardín vertical ecuador"
+    ],
+    "skus": [
+      "JARD-VERT-MED-001 (Mediterráneo)",
+      "JARD-VERT-TROP-002 (Tropical Rojo)",
+      "JARD-VERT-HEL-003 (Helechos)"
+    ],
+    "tip": "Resalta que NO requiere riego ni mantenimiento — esa es tu ventaja real frente a los jardines verticales naturales, que exigen cuidado constante. Sube fotos de cada diseño instalado, con buena iluminación."
+  },
+  {
+    "name": "Musgo Atrapamugre 100% PVC",
+    "cat": "tecnico",
+    "ref": "MUSGO-PVC",
+    "titulo": "Musgo Atrapamugre 100% PVC · $12 Metro Lineal · 16 Colores · Antideslizante · Quito · Envío Nacional",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Hogar",
+    "estado": "Nuevo",
+    "descLines": [
+      "🧹 MUSGO ATRAPAMUGRE — 100% PVC",
+      "💰 $12,00 el metro lineal",
+      "",
+      "El piso ideal para entradas y zonas de alto tránsito. Atrapa la suciedad y humedad antes de que entre a tu hogar o negocio.",
+      "",
+      "📐 MEDIDAS:",
+      "• Ancho del rollo: 1,20 m",
+      "• Rollo completo: 12 metros lineales",
+      "• También se vende por metro lineal",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Material 100% PVC de alta durabilidad",
+      "• Atrapa suciedad y humedad",
+      "• Base antideslizante",
+      "• Fácil de limpiar",
+      "• 16 colores disponibles",
+      "",
+      "🎨 COLORES DISPONIBLES:",
+      "Negro · Gris oscuro · Gris claro · Blanco · Café · Beige · Amarillo · Naranja · Rosa pastel · Fucsia · Rojo · Vinotinto · Morado · Verde esmeralda · Verde lima · Azul claro · Azul marino",
+      "",
+      "💡 IDEAL PARA:",
+      "• Entradas de casas y oficinas",
+      "• Locales comerciales y restaurantes",
+      "• Garajes y zonas de alto tránsito",
+      "• Hoteles y edificios",
+      "",
+      "💬 Escríbenos indicando el color y los metros que necesitas para confirmarte disponibilidad.",
+      "",
+      "📦 Envíos a nivel nacional",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145"
+    ],
+    "tags": [
+      "musgo atrapamugre",
+      "piso atrapamugre",
+      "tapete atrapasuciedad",
+      "piso pvc entrada",
+      "musgo pvc",
+      "alfombra atrapamugre",
+      "piso antideslizante entrada",
+      "tapete para entrada",
+      "piso pvc colores",
+      "musgo pvc quito",
+      "alfombra pvc rollo",
+      "piso pvc metro lineal",
+      "tapete pvc colores",
+      "piso pvc ecuador",
+      "atrapa suciedad humedad"
+    ],
+    "skus": [
+      "MUSGO-PVC-001 (por metro lineal)",
+      "MUSGO-PVC-ROLL-002 (rollo completo 12ml)"
+    ],
+    "tip": "Menciona los 16 colores en el título o primeras líneas — es tu mayor diferenciador frente a la competencia que solo ofrece negro o gris. Sube como primera foto la del rollo con la paleta de colores visible."
+  },
+  {
+    "name": "Alfombras para Ascensor",
+    "cat": "textil",
+    "ref": "ALF-ASC",
+    "foto": "assets/textiles/ALF-ASC.png",
+    "titulo": "Alfombras para Ascensor Personalizadas · Logo del Edificio · Antideslizante · Quito · Envío Nacional",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Hogar",
+    "estado": "Nuevo",
+    "descLines": [
+      "🛗 ALFOMBRAS PARA ASCENSOR — LA SOLUCIÓN PROFESIONAL Y SEGURA",
+      "",
+      "Dale una imagen elegante y segura al ascensor de tu edificio, conjunto residencial u oficina. Alfombras a medida con el nombre o logo de tu edificio.",
+      "",
+      "✅ CARACTERÍSTICAS:",
+      "• Personalización con el nombre o logo del edificio",
+      "• Base antideslizante — mayor seguridad para los usuarios",
+      "• Material resistente al tráfico diario",
+      "• Medida exacta según el ascensor",
+      "• Fácil limpieza y mantenimiento",
+      "• Acabado profesional y duradero",
+      "",
+      "🏢 IDEAL PARA:",
+      "• Edificios residenciales",
+      "• Conjuntos habitacionales",
+      "• Oficinas y torres corporativas",
+      "• Hoteles y centros comerciales",
+      "",
+      "💰 PRECIO POR COTIZACIÓN",
+      "El valor depende de la medida del ascensor y el diseño.",
+      "",
+      "💬 Escríbenos con la medida de tu ascensor y el nombre o logo que quieres incluir. Te enviamos el presupuesto en minutos.",
+      "",
+      "📦 Envíos a todo el Ecuador",
+      "📍 Quito — Versalles N21-157 y San Gregorio",
+      "📱 WhatsApp: 0969 484 145"
+    ],
+    "tags": [
+      "alfombra para ascensor",
+      "alfombra ascensor edificio",
+      "alfombra antideslizante ascensor",
+      "alfombra personalizada edificio",
+      "seguridad ascensor",
+      "alfombra edificio quito",
+      "alfombra conjunto residencial",
+      "alfombra corporativa ascensor",
+      "piso ascensor",
+      "alfombra logo edificio",
+      "administración de edificios",
+      "alfombra a medida ascensor",
+      "alfombra oficina torre",
+      "alfombra hotel ascensor"
+    ],
+    "skus": [
+      "ALF-ASC-001 (estándar)",
+      "ALF-ASC-002 (con logo/nombre)"
+    ],
+    "tip": "Contacta administradores de edificios y conjuntos residenciales directamente — son el comprador ideal para este producto, más que un cliente individual de Marketplace."
+  }
+];
+
+/* ---------------- ICONS ---------------- */
+const ICONS = {
+  textil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9v6M12 9v6M17 9v6"/></svg>',
+  agua: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c4 5 7 8.5 7 12a7 7 0 1 1-14 0c0-3.5 3-7 7-12Z"/></svg>',
+  verde: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c8 1 13-4 14-14-10 1-15 6-14 14Z"/><path d="M6 18c3-4 6-7 12-12"/></svg>',
+  tecnico: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="7" cy="7" r="1.5"/><circle cx="12" cy="7" r="1.5"/><circle cx="17" cy="7" r="1.5"/><circle cx="7" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="17" cy="12" r="1.5"/><circle cx="7" cy="17" r="1.5"/><circle cx="12" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>',
+  servicio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg>'
+};
+const COPY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+
+const CATS = {
+  textil:   { label:"Alfombras y Tapetes",  order:1, color:"var(--cat-textil)"   },
+  verde:    { label:"Césped y Jardines",    order:2, color:"var(--cat-verde)"    },
+  agua:     { label:"Cortinas de Baño",     order:3, color:"var(--cat-agua)"     },
+  tecnico:  { label:"Pisos Técnicos",       order:4, color:"var(--cat-tecnico)"  },
+  servicio: { label:"Servicios",            order:5, color:"var(--cat-servicio)"}
+};
+
+/* ---------------- HELPERS ---------------- */
+function esc(str){
+  return String(str).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+}
+function isPriceReady(precio){
+  return /^\d+(\.\d+)?$/.test(String(precio).trim());
+}
+function slug(str){
+  return String(str).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+}
+
+/* ---------------- BUILD FILTER PILLS ---------------- */
+const filterPillsEl = document.getElementById('filterPills');
+const counts = { all: data.length };
+Object.keys(CATS).forEach(k => counts[k] = data.filter(p => p.cat === k).length);
+
+let pillsHtml = `<button class="pill active" data-cat="all">Todos <span class="pill-count">${counts.all}</span></button>`;
+Object.entries(CATS).sort((a,b)=>a[1].order-b[1].order).forEach(([key, meta]) => {
+  pillsHtml += `<button class="pill" data-cat="${key}" style="--pill-color:${meta.color}"><span class="dot" style="background:${meta.color}"></span>${meta.label} <span class="pill-count">${counts[key]}</span></button>`;
+});
+filterPillsEl.innerHTML = pillsHtml;
+
+/* ---------------- BUILD SECTIONS + CARDS ---------------- */
+const containerEl = document.getElementById('container');
+let globalIndex = 0;
+let sectionsHtml = '';
+
+Object.entries(CATS).sort((a,b)=>a[1].order-b[1].order).forEach(([catKey, meta]) => {
+  const items = data.filter(p => p.cat === catKey);
+  if (!items.length) return;
+
+  let cardsHtml = '';
+  items.forEach(p => {
+    const id = 'pub-' + slug(p.name);
+    const priceReady = isPriceReady(p.precio);
+    const priceHtml = priceReady
+      ? `<div class="price-tag ready">
+           <span class="price-cur">$</span><span class="price-num">${esc(p.precio)}</span>
+           <button class="icon-copy-btn" data-copy="${encodeURIComponent(p.precio)}" aria-label="Copiar precio" title="Copiar precio">${COPY_ICON}</button>
+         </div>`
+      : `<div class="price-tag pending"><span class="price-pending-label">Definir precio</span></div>`;
+
+    const descRaw = p.descLines.join('\n');
+    const descHtml = p.descLines.map(line => esc(line) || '&nbsp;').join('<br>');
+    const tagsRaw = p.tags.join(', ');
+    const tagsHtml = p.tags.map(t => `<span class="chip">${esc(t)}</span>`).join('');
+    const skuHtml = p.skus.map(s => {
+      const clean = s.split(' (')[0];
+      return `<div class="sku-row"><span class="sku-code">${esc(s)}</span><button class="icon-copy-btn" data-copy="${encodeURIComponent(clean)}" aria-label="Copiar SKU" title="Copiar SKU">${COPY_ICON}</button></div>`;
+    }).join('');
+
+    const thumbHtml = p.foto
+      ? `<div class="pub-thumb"><img src="${esc(p.foto)}" alt="${esc(p.name)}" loading="lazy"></div>`
+      : `<div class="pub-thumb pub-thumb-empty"><span class="eyebrow-icon">${ICONS[p.cat]}</span><span>Sin imagen aún</span></div>`;
+
+    cardsHtml += `
+    <article class="pub" id="${id}" data-cat="${p.cat}" data-name="${esc(p.name).toLowerCase()} ${esc(p.titulo).toLowerCase()}" style="--accent:${meta.color}; --i:${globalIndex};">
+      <div class="pub-accent"></div>
+      ${thumbHtml}
+      <div class="pub-inner">
+        <div class="pub-eyebrow">
+          <span class="eyebrow-icon">${ICONS[p.cat]}</span>
+          <span class="eyebrow-label">${meta.label}</span>
+          <span class="eyebrow-ref">REF. ${esc(p.ref)}</span>
+        </div>
+        <h3 class="pub-title-text">${esc(p.name)}</h3>
+
+        <div class="pub-meta">
+          ${priceHtml}
+          <dl class="spec-list">
+            <div class="spec-row"><dt>Categoría</dt><dd>${esc(p.categoria)}</dd></div>
+            <div class="spec-row"><dt>Estado</dt><dd>${esc(p.estado)}</dd></div>
+          </dl>
+        </div>
+
+        <div class="field">
+          <div class="field-head"><span>Título</span><button class="btn-copy" data-copy="${encodeURIComponent(p.titulo)}">${COPY_ICON} Copiar</button></div>
+          <div class="value-block titulo-block">${esc(p.titulo)}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-head"><span>Descripción</span><button class="btn-copy" data-copy="${encodeURIComponent(descRaw)}">${COPY_ICON} Copiar</button></div>
+          <div class="value-block desc-block copyable" tabindex="0">${descHtml}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-head"><span>Etiquetas de producto</span><button class="btn-copy" data-copy="${encodeURIComponent(tagsRaw)}">${COPY_ICON} Copiar todas</button></div>
+          <div class="chip-wrap">${tagsHtml}</div>
+        </div>
+
+        <div class="field" style="margin-bottom:14px;">
+          <div class="field-head"><span>SKU</span></div>
+          <div class="sku-rows">${skuHtml}</div>
+        </div>
+
+        <div class="tip-note">
+          <p><strong>Tip</strong> — ${esc(p.tip)}</p>
+        </div>
+      </div>
+    </article>`;
+    globalIndex++;
+  });
+
+  sectionsHtml += `
+  <section class="cat-section" data-cat="${catKey}">
+    <div class="cat-divider" style="--accent:${meta.color}">
+      <span class="cat-icon">${ICONS[catKey]}</span>
+      <h2>${meta.label}</h2>
+      <span class="cat-count">${items.length}</span>
+      <span class="cat-line"></span>
+    </div>
+    ${cardsHtml}
+  </section>`;
+});
+
+containerEl.innerHTML = sectionsHtml;
+
+/* ---------------- FILTERING ---------------- */
+const searchInput = document.getElementById('search');
+const resultCountEl = document.getElementById('resultCount');
+let activeCat = 'all';
+
+function applyFilters(){
+  const q = searchInput.value.trim().toLowerCase();
+  let totalVisible = 0;
+  document.querySelectorAll('.cat-section').forEach(sec => {
+    let visibleInSection = 0;
+    sec.querySelectorAll('.pub').forEach(card => {
+      const matchesCat = activeCat === 'all' || card.dataset.cat === activeCat;
+      const matchesText = !q || card.dataset.name.includes(q);
+      const show = matchesCat && matchesText;
+      card.classList.toggle('hidden', !show);
+      if (show){ visibleInSection++; totalVisible++; }
+    });
+    sec.classList.toggle('hidden', visibleInSection === 0);
+  });
+  resultCountEl.textContent = `Mostrando ${totalVisible} de ${data.length} publicaciones`;
+}
+
+searchInput.addEventListener('input', applyFilters);
+
+filterPillsEl.addEventListener('click', (e) => {
+  const pill = e.target.closest('.pill');
+  if (!pill) return;
+  activeCat = pill.dataset.cat;
+  filterPillsEl.querySelectorAll('.pill').forEach(p => p.classList.toggle('active', p === pill));
+  applyFilters();
+});
+
+applyFilters();
+
+/* ---------------- COPY LOGIC ---------------- */
+function showToast(){
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove('show'), 1300);
+}
+
+function fallbackCopy(text, done){
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try { document.execCommand('copy'); done(); } catch(e){}
+  document.body.removeChild(ta);
+}
+
+function copyToClipboard(text, btn){
+  function done(){
+    if (!btn.dataset.label) btn.dataset.label = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.innerHTML = btn.classList.contains('btn-copy') ? (COPY_ICON + ' ✓ Copiado') : COPY_ICON;
+    showToast();
+    clearTimeout(btn._t);
+    btn._t = setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = btn.dataset.label;
+    }, 1300);
+  }
+  if (navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  } else {
+    fallbackCopy(text, done);
+  }
+}
+
+function selectAllText(el){
+  if (window.getSelection && document.createRange){
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+}
+
+document.addEventListener('click', (e) => {
+  const copyBtn = e.target.closest('[data-copy]');
+  if (copyBtn){
+    const text = decodeURIComponent(copyBtn.getAttribute('data-copy'));
+    copyToClipboard(text, copyBtn);
+    return;
+  }
+  const block = e.target.closest('.copyable');
+  if (block) selectAllText(block);
+});
+
+/* ---------------- BACK TO TOP ---------------- */
+const toTopBtn = document.getElementById('toTop');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+window.addEventListener('scroll', () => {
+  toTopBtn.classList.toggle('show', window.scrollY > 500);
+});
+toTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+});
+</script>
+
+</body>
+</html>
