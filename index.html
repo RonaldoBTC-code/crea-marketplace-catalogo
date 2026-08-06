@@ -5,28 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CREA Alfombras & Pisos — Catálogo Marketplace</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root{
-  --bg:#14161B;
-  --surface:#1C1F26;
-  --surface-soft:#23262E;
-  --surface-soft-2:#2A2E37;
-  --line:#2E323B;
-  --line-soft:#3C414C;
-  --text:#ECE7DC;
-  --text-dim:#A7AEB8;
-  --text-faint:#6E7480;
+  --bg:#F8F9FA;
+  --surface:#FFFFFF;
+  --surface-soft:#EDEEEF;
+  --surface-soft-2:#E1E3E4;
+  --line:#DADCDF;
+  --line-soft:#C4C6CF;
+  --text:#191C1D;
+  --text-dim:#44474E;
+  --text-faint:#74777F;
 
-  --cat-textil:#CC8552;
-  --cat-agua:#5D8CB3;
-  --cat-verde:#7C9A63;
-  --cat-tecnico:#9098A3;
-  --cat-servicio:#D1A24A;
+  --navy:#011B3E;
+  --navy-soft:#0B2A54;
+  --on-navy:#FFFFFF;
+  --on-navy-dim:#AAB8CE;
+  --gold:#FECB00;
+  --on-gold:#1A1604;
 
-  --font-display:'Big Shoulders Display', Impact, 'Arial Narrow Bold', sans-serif;
-  --font-body:'IBM Plex Sans', -apple-system, 'Segoe UI', Arial, sans-serif;
-  --font-mono:'IBM Plex Mono', 'Courier New', monospace;
+  --cat-textil:#B15C2E;
+  --cat-agua:#2D5F86;
+  --cat-verde:#4F7A3B;
+  --cat-tecnico:#5C6470;
+  --cat-servicio:#A87B12;
+
+  --font-display:'Hanken Grotesk', -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-body:'Hanken Grotesk', -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-mono:'JetBrains Mono', 'Courier New', monospace;
 
   --radius-sm:8px;
   --radius-md:12px;
@@ -47,30 +54,30 @@ body{
   color:var(--text);
   padding:0 0 80px;
   background-image:
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.022) 0 1px, transparent 1px 27px),
-    repeating-linear-gradient(-45deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 27px);
+    repeating-linear-gradient(45deg, rgba(1,27,62,0.028) 0 1px, transparent 1px 27px),
+    repeating-linear-gradient(-45deg, rgba(1,27,62,0.022) 0 1px, transparent 1px 27px);
   background-attachment:fixed;
 }
 
-::selection{ background:var(--cat-servicio); color:#1A1604; }
+::selection{ background:var(--gold); color:var(--on-gold); }
 
 /* ---------- HEADER ---------- */
 header{
-  padding:38px 20px 28px;
+  padding:36px 20px 26px;
   text-align:center;
-  border-bottom:1px solid var(--line);
+  background:var(--navy);
   position:relative;
 }
 .brand-box{
   display:inline-block;
-  border:2px solid var(--text);
+  border:2px solid var(--gold);
   border-radius:6px;
   padding:8px 20px;
   font-family:var(--font-display);
   font-weight:800;
   font-size:30px;
   letter-spacing:2px;
-  color:var(--text);
+  color:var(--gold);
 }
 .brand-sub{
   margin-top:12px;
@@ -78,12 +85,12 @@ header{
   font-size:11px;
   letter-spacing:4px;
   text-transform:uppercase;
-  color:var(--text-dim);
+  color:var(--on-navy);
 }
 .brand-tag{
   margin-top:4px;
   font-size:13px;
-  color:var(--text-faint);
+  color:var(--on-navy-dim);
 }
 
 /* ---------- TOOLBAR ---------- */
@@ -91,7 +98,7 @@ header{
   position:sticky;
   top:0;
   z-index:50;
-  background:rgba(20,22,27,0.92);
+  background:rgba(248,249,250,0.92);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
   padding:14px 20px;
@@ -126,7 +133,7 @@ header{
   font-size:14px;
   font-family:var(--font-body);
 }
-#search:focus{ outline:none; border-color:var(--cat-servicio); }
+#search:focus{ outline:none; border-color:var(--gold); }
 #search::placeholder{ color:var(--text-faint); }
 
 .filter-pills{
@@ -317,7 +324,7 @@ header{
   padding:9px 16px 9px 20px;
   clip-path:polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%);
   background:var(--accent);
-  color:#16140C;
+  color:#FFF9EA;
   font-family:var(--font-mono);
   flex-shrink:0;
 }
@@ -330,12 +337,12 @@ header{
   border-radius:50%;
   transform:translateY(-50%);
 }
-.price-tag .price-cur{ font-size:13px; font-weight:600; opacity:0.75; }
+.price-tag .price-cur{ font-size:13px; font-weight:600; opacity:0.85; }
 .price-tag .price-num{ font-size:19px; font-weight:600; }
 .price-tag.ready .icon-copy-btn{
-  background:rgba(22,20,12,0.18);
+  background:rgba(255,249,234,0.22);
   border:none;
-  color:#16140C;
+  color:#FFF9EA;
   width:22px; height:22px;
   border-radius:50%;
   display:inline-flex;
@@ -345,7 +352,7 @@ header{
   margin-left:4px;
   flex-shrink:0;
 }
-.price-tag.ready .icon-copy-btn:hover{ background:rgba(22,20,12,0.3); }
+.price-tag.ready .icon-copy-btn:hover{ background:rgba(255,249,234,0.36); }
 .price-tag.ready .icon-copy-btn svg{ width:12px; height:12px; }
 
 .price-tag.pending{
@@ -528,7 +535,7 @@ header{
 }
 .to-top svg{ width:18px; height:18px; }
 .to-top.show{ opacity:1; pointer-events:auto; }
-.to-top:hover{ transform:translateY(-3px); border-color:var(--cat-servicio); }
+.to-top:hover{ transform:translateY(-3px); border-color:var(--gold); }
 
 /* ---------- TOAST ---------- */
 #toast{
@@ -536,8 +543,8 @@ header{
   bottom:24px;
   left:50%;
   transform:translateX(-50%) translateY(20px);
-  background:var(--cat-servicio);
-  color:#1A1604;
+  background:var(--gold);
+  color:var(--on-gold);
   padding:10px 22px;
   border-radius:8px;
   font-size:13.5px;
@@ -556,9 +563,10 @@ footer{
   margin:40px auto 0;
   padding:20px;
   text-align:center;
-  color:var(--text-faint);
+  color:var(--on-navy-dim);
   font-size:12px;
-  border-top:1px solid var(--line);
+  background:var(--navy);
+  border-radius:var(--radius-md);
 }
 
 /* ---------- RESPONSIVE ---------- */
