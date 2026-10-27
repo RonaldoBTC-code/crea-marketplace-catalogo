@@ -678,6 +678,15 @@ body{
 .pmodal-copy-all:active{ transform:scale(0.97); }
 .pmodal-copy-all svg{ width:15px; height:15px; }
 
+.product-thumb img.photo-contain{ object-fit:contain; background:#fff; }
+.extra-details{ border-top:1px solid var(--line); padding-top:12px; }
+.extra-details summary{ cursor:pointer; font-size:13px; font-weight:600; color:var(--text-dim); }
+.extra-details[open] summary{ margin-bottom:16px; }
+.reference-photo{ margin:0 0 16px; }
+.reference-photo img{ width:100%; max-height:180px; object-fit:contain; background:#fff; border-radius:8px; }
+.reference-photo figcaption{ margin-top:6px; font-size:12px; color:var(--text-dim); }
+.reference-photo a{ color:var(--navy); }
+
 /* ---------- BACK TO TOP ---------- */
 .to-top{
   position:fixed;
@@ -765,13 +774,13 @@ footer{
     </div>
     <nav class="nav-links">
       <a href="#catalogo">Catálogo</a>
-      <a href="#categorias">Categorías</a>
+      <a href="#filterPills">Categorías</a>
       <a href="https://wa.me/593969484145" target="_blank" rel="noopener">Contacto</a>
     </nav>
     <div class="nav-actions">
       <div class="nav-search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <input id="search" type="text" placeholder="Buscar: cortina, césped, musgo…" autocomplete="off">
+        <input id="search" type="text" placeholder="Buscar: piso, caucho, aplanadora…" aria-label="Buscar productos" autocomplete="off">
       </div>
       <a class="nav-cta" href="https://wa.me/593969484145" target="_blank" rel="noopener">WhatsApp</a>
       <button class="nav-burger" aria-label="Menú" id="navBurger">
@@ -784,7 +793,7 @@ footer{
 <main class="main-shell">
   <section class="hero">
     <h1>Catálogo de publicaciones para <span class="hero-accent">Facebook Marketplace</span></h1>
-    <p>Scripts listos para copiar y pegar — títulos, descripciones, etiquetas y SKU de cada producto CREA Alfombras &amp; Pisos, organizados por categoría.</p>
+    <p>Títulos y descripciones breves de CREA, listos para copiar por producto.</p>
     <a class="hero-cta" href="#catalogo">
       Ver catálogo
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
@@ -795,11 +804,11 @@ footer{
     <div class="catalog-head">
       <div>
         <h2>Productos</h2>
-        <p class="catalog-sub">Toca cualquier tarjeta para ver el script completo y copiarlo.</p>
+        <p class="catalog-sub">Abre un producto y copia su título o descripción.</p>
       </div>
       <div class="result-count" id="resultCount"></div>
     </div>
-    <div class="filter-pills" id="filterPills"></div>
+    <div class="filter-pills" id="filterPills" aria-label="Categorías"></div>
     <div class="product-grid" id="container"></div>
   </section>
 </main>
@@ -821,59 +830,111 @@ footer{
 <script>
 const data = [
   {
+    "name": "Piso flotante",
+    "cat": "tecnico",
+    "ref": "PISO-FLOT",
+    "foto": "assets/textiles/PISO-FLOT.png",
+    "fotoReferencia": true,
+    "titulo": "Piso flotante acabado madera | Quito",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Materiales para pisos",
+    "estado": "Nuevo",
+    "descLines": [
+      "Piso flotante con acabado tipo madera para renovar tus espacios.",
+      "Consulta tonos, medidas, espesor y disponibilidad.",
+      "Envía los m² que necesitas para cotizar.",
+      "Quito. WhatsApp: 0969 484 145."
+    ],
+    "tags": [
+      "piso flotante",
+      "piso tipo madera",
+      "piso para interiores",
+      "pisos Quito",
+      "acabados"
+    ],
+    "skus": [
+      "PISO-FLOT"
+    ],
+    "tip": "Confirma material, espesor, cobertura por caja y precio por m² antes de publicar."
+  },
+  {
+    "name": "Moquetas de caucho",
+    "cat": "tecnico",
+    "ref": "CAUCHO-MOQ",
+    "foto": "assets/textiles/CAUCHO-MOQ.png",
+    "fotoReferencia": true,
+    "titulo": "Moqueta de caucho para pisos | Quito",
+    "precio": "Definir precio al publicar",
+    "categoria": "Casa y jardín → Materiales para pisos",
+    "estado": "Nuevo",
+    "descLines": [
+      "Moquetas de caucho para revestimiento de pisos.",
+      "Consulta texturas, ancho, espesor y disponibilidad.",
+      "Indica las medidas y el uso que necesitas para cotizar.",
+      "Quito. WhatsApp: 0969 484 145."
+    ],
+    "tags": [
+      "moqueta de caucho",
+      "piso de caucho",
+      "caucho en rollo",
+      "revestimiento de piso",
+      "pisos Quito"
+    ],
+    "skus": [
+      "CAUCHO-MOQ"
+    ],
+    "tip": "Confirma textura, material, medidas y unidad de venta. La foto no confirma los modelos disponibles."
+  },
+  {
+    "name": "Aplanadora en alquiler (compactadora)",
+    "cat": "servicio",
+    "ref": "COMP-ALQ",
+    "foto": "assets/equipos/COMP-ALQ.png",
+    "fotoReferencia": true,
+    "fotoFit": "contain",
+    "titulo": "Alquiler de compactadora de placa (aplanadora) | Quito",
+    "precio": "Definir tarifa de alquiler",
+    "categoria": "Alquiler de equipos",
+    "estado": "Alquiler",
+    "descLines": [
+      "Compactadora de placa (aplanadora) en alquiler para trabajos de compactación.",
+      "Consulta tarifa, plazo, garantía y disponibilidad.",
+      "Indica la fecha, duración y lugar de uso para cotizar.",
+      "Quito. WhatsApp: 0969 484 145."
+    ],
+    "tags": [
+      "alquiler compactadora",
+      "aplanadora",
+      "compactadora de placa",
+      "alquiler maquinaria",
+      "maquinaria Quito"
+    ],
+    "skus": [
+      "COMP-ALQ"
+    ],
+    "tip": "Confirma modelo, tarifa, depósito, transporte y condiciones del alquiler. Imagen referencial del tipo de equipo."
+  },
+  {
     "name": "Alfombras Decorativas",
     "cat": "textil",
     "ref": "ALF-DEC",
     "foto": "assets/textiles/ALF-DEC.png",
-    "titulo": "Alfombra Decorativa · 8 Diseños · 120x170cm · Sala y Comedor · Quito · Envío Nacional",
+    "titulo": "Alfombra decorativa 120 x 170 cm | Quito",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Hogar",
     "estado": "Nuevo",
     "descLines": [
-      "🏠 ALFOMBRAS DECORATIVAS — 8 DISEÑOS",
-      "📐 Medida: 120 cm x 170 cm",
-      "",
-      "Perfectas para sala, comedor, dormitorio o estudio. Diseños modernos que transforman cualquier espacio al instante.",
-      "",
-      "✅ INCLUYE:",
-      "• Textura suave y agradable al tacto",
-      "• Diseños modernos y elegantes",
-      "• Medida estándar 120 x 170 cm",
-      "• Disponibles en varios colores y estampados",
-      "",
-      "💡 USOS IDEALES:",
-      "• Sala de estar y comedor",
-      "• Dormitorios principales y juveniles",
-      "• Estudios y home office",
-      "• Áreas de juego para niños",
-      "",
-      "💬 Escríbenos indicando el número de foto del diseño que prefieres.",
-      "",
-      "📦 Envíos a todo el Ecuador",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145"
+      "Alfombras de 120 x 170 cm para sala, comedor o dormitorio.",
+      "8 diseños. Textura suave y varios colores.",
+      "Indica el diseño que prefieres. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "alfombra decorativa",
       "alfombra sala",
       "alfombra moderna",
       "alfombra 120x170",
-      "tapete decorativo",
-      "alfombra hogar",
-      "alfombra Ecuador",
-      "alfombra Quito",
-      "alfombra dormitorio",
-      "decoración hogar",
-      "alfombra comedor",
-      "alfombra suave",
-      "alfombra gris",
-      "alfombra beige",
-      "alfombra estampada",
-      "alfombra juvenil",
-      "alfombra home office",
-      "alfombra varios diseños",
-      "tapete sala",
-      "envío nacional"
+      "tapete decorativo"
     ],
     "skus": [
       "ALF-DEC-120-001"
@@ -885,58 +946,22 @@ const data = [
     "cat": "agua",
     "ref": "CORT-180",
     "foto": "assets/textiles/CORT-180.png",
-    "titulo": "Cortina de Baño · 10 Diseños · 180x180cm · PEVA Impermeable · Ganchos Incluidos · Quito · Envío",
+    "titulo": "Cortina de baño PEVA 180 x 180 cm con ganchos",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Hogar",
     "estado": "Nuevo",
     "descLines": [
-      "🚿 CORTINAS PARA BAÑO — 10 DISEÑOS",
-      "📐 Medida: 180 cm x 180 cm",
-      "",
-      "Renueva tu baño de forma fácil y económica. Material PEVA impermeable de alta calidad.",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Material PEVA 100% impermeable",
-      "• Medida estándar 180 x 180 cm",
-      "• Incluye 12 ganchos de instalación",
-      "• Fácil de instalar y limpiar",
-      "• Resistente al moho y humedad",
-      "",
-      "🎨 DISEÑOS DISPONIBLES:",
-      "Floral azul · Rayas marineras · Estrellas de mar · Hojas tropicales · Ginkgo · Peces · Flores navy · Manchas grises · Trazos · Puntos de colores",
-      "",
-      "💡 PERFECTA PARA:",
-      "• Baños con tina o ducha",
-      "• Regalos prácticos para el hogar",
-      "• Renovación rápida del baño",
-      "",
-      "💬 Escríbenos indicando el número de foto del diseño que prefieres.",
-      "",
-      "📦 Envíos a todo el Ecuador",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145"
+      "Cortina de baño impermeable de PEVA, de 180 x 180 cm.",
+      "Incluye 12 ganchos. 10 diseños para elegir.",
+      "Indica el diseño que prefieres. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "cortina de baño",
       "cortina baño 180x180",
       "cortina ducha",
       "shower curtain",
-      "cortina impermeable",
-      "cortina PEVA",
-      "cortina con ganchos",
-      "baño decoración",
-      "cortina bañera",
-      "cortina 180",
-      "cortina Quito",
-      "cortina Ecuador",
-      "cortina floral",
-      "cortina moderna",
-      "cortina hogar",
-      "decoración baño",
-      "baño moderno",
-      "accesorios baño",
-      "envío nacional",
-      "cortina antimoho"
+      "cortina impermeable"
     ],
     "skus": [
       "CORT-BAN-PEVA-180-001"
@@ -948,60 +973,22 @@ const data = [
     "cat": "textil",
     "ref": "TAP-GRS",
     "foto": "assets/textiles/TAP-GRS.png",
-    "titulo": "Tapizón Gris por m² · Stands, Ferias y Eventos · Instalación Profesional · Quito · Envío Nacional",
+    "titulo": "Tapizón gris para ferias y eventos | Quito",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Hogar",
     "estado": "Nuevo",
     "descLines": [
-      "🎪 TAPIZÓN PARA FERIAS Y EVENTOS",
-      "🎨 Color: Gris oscuro elegante",
-      "",
-      "¿Necesitas cubrir el piso de tu stand o evento con una alfombra profesional?",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Color gris oscuro elegante",
-      "• Venta por metros o rollos completos",
-      "• Instalación profesional disponible",
-      "• Envíos a nivel nacional",
-      "",
-      "🏆 IDEAL PARA:",
-      "• Stands y ferias comerciales",
-      "• Eventos corporativos",
-      "• Exposiciones y convenciones",
-      "• Inauguraciones y lanzamientos",
-      "",
-      "🏅 ¿POR QUÉ ELEGIRNOS?",
-      "• 40 años de experiencia en el mercado",
-      "• Personal altamente capacitado",
-      "• Cotizaciones sin compromiso",
-      "",
-      "💬 Escríbenos con las medidas que necesitas y te enviamos el presupuesto en minutos.",
-      "",
-      "📦 Envíos a todo el Ecuador",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145"
+      "Tapizón gris oscuro para stands, ferias y eventos.",
+      "Venta por metros o rollo. Instalación disponible.",
+      "Envía las medidas para cotizar. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "tapizón",
       "alfombra para eventos",
       "alfombra stands",
       "tapizón ferias",
-      "piso para feria",
-      "alfombra gris",
-      "alfombra por metros",
-      "tapizón Quito",
-      "alfombra Ecuador",
-      "piso stand",
-      "tapizón eventos",
-      "alfombra feria comercial",
-      "instalación alfombra",
-      "alfombra rollo",
-      "piso exposición",
-      "alfombra corporativa",
-      "tapizón gris",
-      "carpet events",
-      "alfombra por m2",
-      "envío nacional"
+      "piso para feria"
     ],
     "skus": [
       "TAP-GRS-M2-001"
@@ -1013,61 +1000,22 @@ const data = [
     "cat": "textil",
     "ref": "ALF-PUB",
     "foto": "assets/textiles/ALF-PUB.png",
-    "titulo": "Alfombras Publicitarias con Logo · Alto Tráfico · Empresas y Negocios · Cotiza · Envío Nacional",
+    "titulo": "Alfombra personalizada con logo para negocios",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Hogar",
     "estado": "Nuevo",
     "descLines": [
-      "🏢 ALFOMBRAS PUBLICITARIAS CON TU LOGO",
-      "🎯 Fabricamos tu alfombra con el diseño de tu marca",
-      "",
-      "La primera impresión de tu negocio empieza en la entrada. Una alfombra con tu logo comunica profesionalismo y refuerza tu identidad de marca desde el primer paso.",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Material de alto tráfico y larga duración",
-      "• Base antideslizante y antialérgica",
-      "• Personalización total: logo, texto, colores y diseño",
-      "• Variedad de tamaños a pedido",
-      "• Acabado profesional con bordes definidos",
-      "• Fácil limpieza y mantenimiento",
-      "",
-      "🏆 IDEAL PARA:",
-      "• Empresas, corporaciones y franquicias",
-      "• Locales comerciales y restaurantes",
-      "• Hoteles, clínicas y oficinas",
-      "• Consultorios e instituciones públicas",
-      "• Hogares con diseño exclusivo",
-      "",
-      "💰 PRECIO POR COTIZACIÓN",
-      "El valor depende de la medida y diseño.",
-      "",
-      "💬 Escríbenos con tu logo en PNG y la medida que necesitas. Te enviamos el presupuesto en minutos, sin compromiso.",
-      "",
-      "📦 Envíos a todo el Ecuador",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145"
+      "Alfombras con el logo, colores y diseño de tu negocio.",
+      "Base antideslizante y medidas a pedido.",
+      "Envía tu logo y las medidas para cotizar. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "alfombras publicitarias",
       "alfombra con logo",
       "alfombra personalizada",
       "alfombra empresarial",
-      "alfombra alto tráfico",
-      "alfombra antideslizante",
-      "alfombra para negocio",
-      "alfombra entrada local",
-      "alfombra corporativa",
-      "alfombra con bordes",
-      "felpudo personalizado",
-      "alfombra publicitaria Quito",
-      "logo en alfombra",
-      "branding entrada",
-      "alfombra franquicia",
-      "alfombra empresa Ecuador",
-      "custom logo mat",
-      "decoración empresarial",
-      "alfombra a medida",
-      "envío nacional Ecuador"
+      "alfombra alto tráfico"
     ],
     "skus": [
       "ALF-PUB-LOGO-HT-001"
@@ -1079,60 +1027,22 @@ const data = [
     "cat": "verde",
     "ref": "CESP-ART",
     "foto": "assets/textiles/CESP-ART.png",
-    "titulo": "Césped Artificial por m² · Jardines y Terrazas · Instalación Profesional · Quito · Envío Nacional",
+    "titulo": "Césped artificial por m² para jardín y terraza",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Jardinería",
     "estado": "Nuevo",
     "descLines": [
-      "🌿 CÉSPED ARTIFICIAL — Por m²",
-      "💚 Verde todo el año sin mantenimiento",
-      "",
-      "Transforma tu jardín, terraza o balcón sin riego ni corte. Solución duradera para espacios interiores y exteriores.",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Sin mantenimiento ni riego",
-      "• Verde permanente todo el año",
-      "• Fácil limpieza",
-      "• Resistente al sol y a la lluvia",
-      "• Instalación profesional disponible",
-      "",
-      "💡 IDEAL PARA:",
-      "• Jardines y patios",
-      "• Terrazas y balcones",
-      "• Áreas de juego para niños",
-      "• Locales comerciales y oficinas",
-      "• Eventos y decoraciones",
-      "",
-      "📐 Venta por metros cuadrados",
-      "🔧 Instalación profesional disponible",
-      "",
-      "💬 Escríbenos con las medidas de tu espacio y te cotizamos sin compromiso.",
-      "",
-      "📦 Envíos a todo el Ecuador",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145"
+      "Césped artificial para jardines, patios y terrazas.",
+      "Venta por m². No requiere riego ni corte. Instalación disponible.",
+      "Envía las medidas para cotizar. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "césped artificial",
       "pasto artificial",
       "jardín artificial",
       "grass sintético",
-      "césped terraza",
-      "césped balcón",
-      "césped por m2",
-      "césped Quito",
-      "césped Ecuador",
-      "pasto sintético",
-      "jardín sin riego",
-      "césped decorativo",
-      "césped interior",
-      "césped exterior",
-      "instalación césped",
-      "artificial grass",
-      "césped para niños",
-      "decoración jardín",
-      "césped hogar",
-      "envío nacional"
+      "césped terraza"
     ],
     "skus": [
       "CESP-ART-VRD-001"
@@ -1144,60 +1054,22 @@ const data = [
     "cat": "textil",
     "ref": "ALFPUB-FC",
     "foto": "assets/textiles/ALFPUB-FC.png",
-    "titulo": "Alfombras Publicitarias Personalizadas con Tu Logo | Empresas y Negocios",
+    "titulo": "Alfombra con logo a todo color | A medida",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Hogar",
     "estado": "Nuevo",
     "descLines": [
-      "🔥 ALFOMBRAS PUBLICITARIAS PERSONALIZADAS — COTIZA AHORA",
-      "",
-      "¿Buscas darle una imagen profesional a tu negocio? Fabricamos alfombras publicitarias con tu logo, colores y diseño exclusivo.",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Alta resistencia al tráfico",
-      "• Base antideslizante y antipolvo",
-      "• Impresión full color con tu logo",
-      "• Bordes reforzados",
-      "• Variedad de tamaños y colores",
-      "• Ideales para interiores y exteriores",
-      "",
-      "🏢 IDEAL PARA:",
-      "→ Negocios y locales comerciales",
-      "→ Empresas y corporaciones",
-      "→ Hoteles y restaurantes",
-      "→ Clínicas y consultorios",
-      "→ Gimnasios y oficinas",
-      "→ Eventos y stands",
-      "",
-      "📐 MEDIDAS DISPONIBLES:",
-      "• 60x90 cm | 80x120 cm | 100x150 cm",
-      "• Medidas personalizadas bajo pedido",
-      "",
-      "💬 ¿Cómo pedir?",
-      "1️⃣ Escríbenos por WhatsApp",
-      "2️⃣ Envíanos tu logo y medida",
-      "3️⃣ Te enviamos diseño y cotización GRATIS",
-      "",
-      "📦 Envíos a todo el Ecuador",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145",
-      "",
-      "⚡ ENTREGA RÁPIDA | CALIDAD GARANTIZADA"
+      "Alfombras publicitarias con impresión a todo color y base antideslizante.",
+      "Medidas: 60 x 90, 80 x 120 y 100 x 150 cm; también a pedido.",
+      "Envía tu logo y las medidas para cotizar. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "alfombras publicitarias",
       "alfombras personalizadas",
       "alfombras con logo",
       "alfombras para empresas",
-      "alfombras corporativas",
-      "felpudos publicitarios",
-      "alfombras de entrada",
-      "rotulación",
-      "publicidad",
-      "alfombras quito",
-      "alfombras negocios",
-      "alfombras alta resistencia",
-      "impresión full color"
+      "alfombras corporativas"
     ],
     "skus": [
       "ALFPUB-CREA-001 (estándar)",
@@ -1211,66 +1083,22 @@ const data = [
     "cat": "verde",
     "ref": "CESP-COL",
     "foto": "assets/textiles/CESP-COL.png",
-    "titulo": "Césped Artificial de Colores 15mm y 20mm | Jardines y Terrazas | Envío Ecuador",
+    "titulo": "Césped artificial de colores de 15 y 20 mm",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Jardinería",
     "estado": "Nuevo",
     "descLines": [
-      "🌈 CÉSPED ARTIFICIAL DE COLORES — TRANSFORMA TU ESPACIO",
-      "",
-      "¿Quieres un jardín, terraza o zona de juegos diferente y llena de color? Tenemos el césped perfecto para ti.",
-      "",
-      "💰 PRECIOS DISPONIBLES:",
-      "• 15mm → $6,99 /m²",
-      "• 20mm → $9,99 /m²",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Colores disponibles: Verde, Azul, Rojo y más",
-      "• Alta resistencia al uso diario",
-      "• Duradero y de fácil mantenimiento",
-      "• Base antideslizante",
-      "• Resistente a rayos UV",
-      "• No requiere riego ni corte",
-      "",
-      "🏡 IDEAL PARA:",
-      "→ Jardines y terrazas",
-      "→ Zonas de juegos infantiles",
-      "→ Decoración de eventos",
-      "→ Gimnasios y áreas deportivas",
-      "→ Balcones y patios",
-      "→ Decoración comercial",
-      "",
-      "📐 MEDIDAS:",
-      "• Venta por metro cuadrado",
-      "• Cortes personalizados disponibles",
-      "",
-      "🚚 ENVIAMOS A TODO EL ECUADOR",
-      "📦 Empaque seguro garantizado",
-      "",
-      "💬 ¿Cómo comprar?",
-      "1️⃣ Escríbenos por WhatsApp",
-      "2️⃣ Indícanos color, grosor y m²",
-      "3️⃣ Cotización y diseño GRATIS",
-      "",
-      "📍 Quito — Versalles N21-157 y San Gregorio, sector Santa Clara",
-      "📱 WhatsApp: 0969 484 145",
-      "",
-      "⚡ ENTREGA RÁPIDA | CALIDAD GARANTIZADA"
+      "Césped de colores para jardines, terrazas y eventos.",
+      "15 mm: $6,99/m². 20 mm: $9,99/m².",
+      "Consulta colores y disponibilidad. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "césped artificial",
       "césped de colores",
       "pasto sintético",
       "césped decorativo",
-      "pasto artificial colores",
-      "césped azul rojo verde",
-      "jardín artificial",
-      "terraza césped",
-      "zona de juegos césped",
-      "césped quito",
-      "pasto sintético ecuador",
-      "decoración jardín",
-      "césped metro cuadrado"
+      "pasto artificial colores"
     ],
     "skus": [
       "CESP-15MM-001 (estándar)",
@@ -1284,69 +1112,22 @@ const data = [
     "cat": "textil",
     "ref": "CAM-DEC",
     "foto": "assets/textiles/CAM-DEC.png",
-    "titulo": "Caminos Decorativos Residenciales, Comerciales y para Eventos | Envíos Todo Ecuador",
+    "titulo": "Camino de alfombra a medida para pasillos y eventos",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Hogar",
     "estado": "Nuevo",
     "descLines": [
-      "✨ CAMINOS DECORATIVOS — TRANSFORMA CUALQUIER ESPACIO",
-      "",
-      "Dale elegancia y sofisticación a tu hogar, negocio o evento con nuestros caminos decorativos de alta calidad.",
-      "",
-      "🏡 TIPOS DISPONIBLES:",
-      "• Residenciales – Sala, comedor, pasillos, dormitorios",
-      "• Comerciales – Locales, hoteles, restaurantes, oficinas",
-      "• Eventos – Bodas, grados, celebraciones, stands",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Variedad de diseños, colores y texturas",
-      "• Alta durabilidad y resistencia",
-      "• Fácil mantenimiento y limpieza",
-      "• Antideslizante",
-      "• Medidas estándar y personalizadas",
-      "• Material premium de larga duración",
-      "",
-      "🎯 IDEAL PARA:",
-      "→ Pasillos y escaleras residenciales",
-      "→ Salas y comedores",
-      "→ Recepciones de empresas y hoteles",
-      "→ Alfombras para bodas y eventos",
-      "→ Decoración de locales comerciales",
-      "→ Stands y ferias",
-      "",
-      "📐 MEDIDAS:",
-      "• Venta por metro lineal",
-      "• Anchos disponibles: 80cm | 1m | 1,20m | Personalizado",
-      "• Largo a medida según necesidad",
-      "",
-      "🚚 ENVIAMOS A TODO EL ECUADOR",
-      "📦 Empaque cuidadoso garantizado",
-      "",
-      "💬 ¿Cómo pedir?",
-      "1️⃣ Escríbenos por WhatsApp",
-      "2️⃣ Cuéntanos el espacio y medidas",
-      "3️⃣ Te asesoramos y cotizamos GRATIS",
-      "",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145",
-      "🏢 CREA Alfombras & Pisos",
-      "⚡ CALIDAD GARANTIZADA | ENTREGA RÁPIDA"
+      "Caminos decorativos para pasillos, negocios y eventos.",
+      "Venta por metro lineal. Anchos: 80 cm, 1 m y 1,20 m; consulta otras medidas.",
+      "Envía las medidas y el diseño para cotizar. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "caminos decorativos",
       "alfombra pasillo",
       "camino de alfombra",
       "caminos para sala",
-      "caminos para eventos",
-      "alfombra boda",
-      "caminos residenciales",
-      "caminos comerciales",
-      "alfombra corredor",
-      "caminos quito",
-      "decoración hogar alfombra",
-      "caminos personalizados",
-      "alfombras y pisos quito",
-      "camino escalera"
+      "caminos para eventos"
     ],
     "skus": [
       "CAM-RES-001 (residencial)",
@@ -1361,65 +1142,22 @@ const data = [
     "cat": "textil",
     "ref": "APP-STD",
     "foto": "assets/textiles/APP-STD.png",
-    "titulo": "Alfombras Pared a Pared Instaladas | Texturas y Diseños Exclusivos | Envíos Ecuador",
+    "titulo": "Alfombra pared a pared por m² | Quito",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Hogar",
     "estado": "Nuevo",
     "descLines": [
-      "🏡 ALFOMBRAS PARED A PARED — ELEGANCIA Y CONFORT EN CADA ESPACIO",
-      "",
-      "Transforma completamente cualquier habitación con nuestra exclusiva selección de alfombras pared a pared. Texturas y diseños sofisticados para elevar tu ambiente.",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Amplia variedad de texturas y colores",
-      "• Alta densidad y suavidad al tacto",
-      "• Excelente aislamiento térmico y acústico",
-      "• Fácil mantenimiento y limpieza",
-      "• Resistente al uso diario",
-      "• Instalación profesional disponible",
-      "",
-      "🏠 IDEAL PARA:",
-      "→ Dormitorios y salas de estar",
-      "→ Oficinas y salas de reuniones",
-      "→ Hoteles y suites",
-      "→ Estudios y bibliotecas",
-      "→ Cuartos de niños",
-      "→ Espacios comerciales premium",
-      "",
-      "📐 DISPONIBLE EN:",
-      "• Venta por metro cuadrado",
-      "• Instalación en medidas exactas de tu espacio",
-      "• Asesoría de diseño incluida sin costo",
-      "",
-      "🚚 ENVIAMOS A TODO EL ECUADOR",
-      "🔧 Servicio de instalación disponible en Quito",
-      "",
-      "💬 ¿Cómo pedir?",
-      "1️⃣ Escríbenos por WhatsApp",
-      "2️⃣ Cuéntanos las medidas de tu espacio",
-      "3️⃣ Te asesoramos y cotizamos GRATIS",
-      "",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145",
-      "🏢 CREA Alfombras & Pisos",
-      "⚡ CALIDAD PREMIUM | ENTREGA Y ASESORÍA GARANTIZADA"
+      "Alfombras pared a pared para dormitorios, salas y oficinas.",
+      "Venta por m². Variedad de texturas y colores. Instalación disponible en Quito.",
+      "Envía las medidas para cotizar. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "alfombra pared a pared",
       "moqueta",
       "alfombra para dormitorio",
       "alfombra para sala",
-      "alfombra instalada",
-      "alfombra por metro",
-      "alfombra quito",
-      "alfombra residencial",
-      "alfombra oficina",
-      "alfombra hotel",
-      "piso alfombrado",
-      "alfombra suave",
-      "alfombra aislante",
-      "alfombras y pisos quito",
-      "alfombra premium ecuador"
+      "alfombra instalada"
     ],
     "skus": [
       "APP-STD-001 (estándar)",
@@ -1434,70 +1172,22 @@ const data = [
     "cat": "textil",
     "ref": "TAP-COL",
     "foto": "assets/textiles/TAP-COL.png",
-    "titulo": "Tapizón de Colores para Stands, Ferias y Eventos | Alquiler y Venta | Envíos Ecuador",
+    "titulo": "Tapizón de colores para ferias y eventos",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Hogar",
     "estado": "Nuevo",
     "descLines": [
-      "🎪 TAPIZÓN DE COLORES — LA SOLUCIÓN PROFESIONAL PARA TU EVENTO",
-      "",
-      "¿Tienes un stand de feria, evento o exposición? Nuestro tapizón de colores le da el toque profesional que tu marca necesita.",
-      "",
-      "🎨 COLORES DISPONIBLES:",
-      "• Rojo | Azul | Amarillo | Gris | Verde | Negro",
-      "• Y muchos más colores disponibles",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Alta resistencia al tráfico intenso",
-      "• Fácil instalación y retiro",
-      "• Superficie uniforme y profesional",
-      "• Disponible en rollos completos o por metro",
-      "• Ideal para uso temporal y permanente",
-      "• Excelente relación calidad/precio",
-      "",
-      "🏢 IDEAL PARA:",
-      "→ Stands de ferias y exposiciones",
-      "→ Eventos corporativos y lanzamientos",
-      "→ Bodas, grados y celebraciones",
-      "→ Congresos y conferencias",
-      "→ Alfombra roja para eventos",
-      "→ Locales comerciales temporales",
-      "→ Instalaciones deportivas",
-      "",
-      "📐 MEDIDAS DISPONIBLES:",
-      "• Venta por metro cuadrado o lineal",
-      "• Rollos completos con descuento",
-      "• Ancho estándar: 2m | Largo a medida",
-      "",
-      "🚚 ENVIAMOS A TODO EL ECUADOR",
-      "⚡ Entrega express disponible para eventos urgentes",
-      "",
-      "💬 ¿Cómo pedir?",
-      "1️⃣ Escríbenos por WhatsApp",
-      "2️⃣ Indica color, medidas y fecha del evento",
-      "3️⃣ Cotización inmediata SIN COSTO",
-      "",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145",
-      "🏢 CREA Alfombras & Pisos",
-      "⚡ STOCK INMEDIATO | ENTREGA RÁPIDA"
+      "Tapizón de colores para stands, ferias y celebraciones.",
+      "Ancho de 2 m. Venta por metros o rollo completo.",
+      "Indica color, medidas y fecha del evento. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "tapizón",
       "tapizón de colores",
       "alfombra para eventos",
       "alfombra para ferias",
-      "tapizón stand",
-      "alfombra feria",
-      "tapizón rojo",
-      "alfombra roja evento",
-      "tapizón quito",
-      "alfombra para stands",
-      "tapizón por metro",
-      "alfombra corporativa",
-      "tapizón ecuador",
-      "alfombra exposición",
-      "piso para eventos"
+      "tapizón stand"
     ],
     "skus": [
       "TAP-ROJO-001",
@@ -1513,72 +1203,22 @@ const data = [
     "name": "Moqueta PVC Tipo Moneda",
     "cat": "tecnico",
     "ref": "PVC-MON",
-    "titulo": "Moqueta PVC Tipo Moneda Gris | Bodegas, Industrias y Gimnasios | Envíos Ecuador",
+    "titulo": "Moqueta PVC gris tipo moneda por metro lineal",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Herramientas (o Hogar)",
     "estado": "Nuevo",
     "descLines": [
-      "⚙️ MOQUETA PVC TIPO MONEDA — RESISTENCIA Y SEGURIDAD INDUSTRIAL",
-      "",
-      "El piso antideslizante ideal para espacios de alto tráfico y exigencia. Resistente, duradero y seguro.",
-      "",
-      "💰 PRECIO DESDE $3,99 el metro lineal",
-      "",
-      "📐 MEDIDAS DEL ROLLO:",
-      "• 15 metros de largo x 1,30 metros de ancho",
-      "• Venta por metro lineal o rollo completo",
-      "",
-      "🎨 COLOR DISPONIBLE:",
-      "• Gris industrial",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Textura tipo moneda antideslizante",
-      "• Alta resistencia a impactos y cargas pesadas",
-      "• Material PVC de alta durabilidad",
-      "• Fácil limpieza y mantenimiento",
-      "• Resistente a aceites, grasas y químicos",
-      "• Aislante térmico y acústico",
-      "• Larga vida útil",
-      "",
-      "🏭 IDEAL PARA:",
-      "→ Bodegas y almacenes",
-      "→ Industrias y plantas de producción",
-      "→ Gimnasios y áreas de entrenamiento",
-      "→ Garajes y parqueaderos",
-      "→ Talleres mecánicos",
-      "→ Cocinas industriales",
-      "→ Pasillos de alto tráfico",
-      "",
-      "🚚 ENVÍOS A NIVEL NACIONAL",
-      "📦 Rollo completo con empaque seguro",
-      "",
-      "💬 ¿Cómo pedir?",
-      "1️⃣ Escríbenos por WhatsApp",
-      "2️⃣ Indica los metros que necesitas",
-      "3️⃣ Cotización inmediata GRATIS",
-      "",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145",
-      "🏢 CREA Alfombras & Pisos",
-      "⚡ STOCK DISPONIBLE | ENTREGA INMEDIATA"
+      "Moqueta de PVC gris con textura tipo moneda.",
+      "Desde $3,99 por metro lineal. Ancho: 1,30 m. Rollo: 15 m.",
+      "Para bodegas, talleres y gimnasios. Consulta disponibilidad. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "moqueta pvc",
       "piso tipo moneda",
       "caucho tipo moneda",
       "piso antideslizante",
-      "moqueta industrial",
-      "piso para bodega",
-      "piso para gimnasio",
-      "piso caucho quito",
-      "moqueta gris",
-      "piso pvc rollo",
-      "caucho para taller",
-      "piso industrial ecuador",
-      "piso antideslizante quito",
-      "moqueta por metro",
-      "piso para garaje",
-      "caucho industrial"
+      "moqueta industrial"
     ],
     "skus": [
       "PVC-MON-GR-001 (por metro)",
@@ -1591,73 +1231,22 @@ const data = [
     "name": "Césped Sintético (Pared, Patio, Interior, Básico)",
     "cat": "verde",
     "ref": "CSPED-MULTI",
-    "titulo": "Césped Sintético para Pared, Patio, Interior y Jardín | Instalación | Envíos Ecuador",
+    "titulo": "Césped sintético para pared, patio e interior",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Jardinería",
     "estado": "Nuevo",
     "descLines": [
-      "🌿 CÉSPED SINTÉTICO — VERDE TODO EL AÑO SIN MANTENIMIENTO",
-      "",
-      "Dale vida a cualquier espacio con nuestro césped sintético de alta calidad. Sin riego, sin corte, sin complicaciones. ¡Siempre perfecto!",
-      "",
-      "🌱 TIPOS DISPONIBLES:",
-      "• PARED – Jardines verticales decorativos",
-      "• PATIO – Resistente para exteriores",
-      "• INTERIOR – Suave y estético para interiores",
-      "• BÁSICO – Económico para jardines y terrazas",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Aspecto natural ultra realista",
-      "• Resistente a rayos UV",
-      "• No requiere riego ni corte",
-      "• Fácil instalación y limpieza",
-      "• Alta durabilidad y resistencia",
-      "• Apto para interiores y exteriores",
-      "• Antialérgico y libre de mantenimiento",
-      "",
-      "🏡 IDEAL PARA:",
-      "→ Jardines verticales en paredes",
-      "→ Patios y terrazas",
-      "→ Salas y espacios interiores",
-      "→ Fachadas decorativas",
-      "→ Áreas de juego infantil",
-      "→ Eventos y decoración",
-      "→ Locales y oficinas",
-      "",
-      "📐 MEDIDAS:",
-      "• Venta por metro cuadrado",
-      "• Rollos en distintos anchos",
-      "• Cortes a medida disponibles",
-      "",
-      "🚚 ENVIAMOS A TODO EL ECUADOR",
-      "📍 Junto a la ferretería STIHL, sector Santa Clara",
-      "",
-      "💬 ¿Cómo pedir?",
-      "1️⃣ Escríbenos por WhatsApp",
-      "2️⃣ Dinos el tipo y los m² que necesitas",
-      "3️⃣ Te cotizamos al instante GRATIS",
-      "",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145",
-      "🏢 CREA Alfombras & Pisos",
-      "⚡ STOCK DISPONIBLE | ASESORÍA GRATUITA"
+      "Césped sintético para paredes, patios e interiores; opción básica disponible.",
+      "Venta por m² y cortes a medida. No requiere riego ni corte.",
+      "Indica el uso y las medidas para cotizar. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "césped sintético",
       "pasto artificial",
       "jardín vertical",
       "césped para pared",
-      "pasto sintético quito",
-      "césped artificial exterior",
-      "césped interior",
-      "jardín artificial",
-      "pasto para patio",
-      "césped sin mantenimiento",
-      "césped decorativo",
-      "pasto artificial ecuador",
-      "jardín vertical quito",
-      "césped para terraza",
-      "grass sintético"
+      "pasto sintético quito"
     ],
     "skus": [
       "CSPED-PAR-001 (pared/vertical)",
@@ -1672,64 +1261,22 @@ const data = [
     "name": "Renovación de Bordes para Alfombras (Servicio)",
     "cat": "servicio",
     "ref": "SERV-ORI",
-    "titulo": "Renovación de Bordes para Alfombras | Costura Artesanal Antes y Después | Quito",
+    "titulo": "Renovación de bordes de alfombras | Quito",
     "precio": "Definir precio al publicar",
     "categoria": "Anuncios clasificados → Varios (o Servicios)",
     "estado": "No aplica — servicio",
     "descLines": [
-      "🪡 RENUEVA LOS BORDES DE TU ALFOMBRA — COSTURA ARTESANAL",
-      "",
-      "¿Tu alfombra tiene los bordes gastados, deshilachados o maltratados? Le damos una segunda vida con un acabado elegante y resistente.",
-      "",
-      "✨ TRANSFORMAMOS:",
-      "Orillas gastadas en bordes elegantes y duraderos con costura artesanal de alta calidad.",
-      "",
-      "✅ BENEFICIOS:",
-      "• Ideal para reparación de alfombras dañadas",
-      "• Mejora la estética y presentación",
-      "• Mayor duración y resistencia al uso",
-      "• Variedad de colores de hilo para el borde",
-      "• Costura firme y profesional",
-      "• Recuperamos alfombras que parecían perdidas",
-      "",
-      "🏠 IDEAL PARA:",
-      "→ Alfombras residenciales gastadas",
-      "→ Tapetes y alfombras decorativas",
-      "→ Alfombras de hoteles y negocios",
-      "→ Alfombras heredadas o de valor sentimental",
-      "→ Restauración antes de vender o reutilizar",
-      "",
-      "🔧 PROCESO:",
-      "1️⃣ Nos envías o traes tu alfombra",
-      "2️⃣ Evaluamos el estado de los bordes",
-      "3️⃣ Aplicamos costura artesanal con orillo nuevo",
-      "4️⃣ Recibes tu alfombra como nueva",
-      "",
-      "💬 ¿Cómo cotizar?",
-      "1️⃣ Escríbenos por WhatsApp",
-      "2️⃣ Envíanos foto de tu alfombra",
-      "3️⃣ Te damos cotización y tiempo de entrega",
-      "",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145",
-      "🏢 CREA Alfombras & Pisos",
-      "⚡ ANTES Y DESPUÉS GARANTIZADO"
+      "Renovación de bordes gastados o deshilachados de alfombras.",
+      "Acabado con costura artesanal y distintos colores de hilo.",
+      "Envía una foto y las medidas para cotizar y confirmar el plazo.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "reparación de alfombras",
       "orillado de alfombras",
       "bordado de alfombras",
       "restauración de alfombras",
-      "costura de alfombras",
-      "arreglo de tapetes",
-      "mantenimiento de alfombras",
-      "alfombras quito",
-      "servicio de costura",
-      "renovación de bordes",
-      "reparar alfombra gastada",
-      "taller de alfombras",
-      "costura artesanal",
-      "alfombras y pisos quito"
+      "costura de alfombras"
     ],
     "skus": [
       "SERV-ORI-001 (orillado básico, 1 lado)",
@@ -1743,56 +1290,22 @@ const data = [
     "name": "Jardines Verticales Sintéticos",
     "cat": "verde",
     "ref": "JARD-VERT",
-    "titulo": "Jardines Verticales Sintéticos · Mediterráneo, Tropical y Helechos · Quito · Envío Nacional",
+    "titulo": "Jardín vertical sintético decorativo | Quito",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Jardinería",
     "estado": "Nuevo",
     "descLines": [
-      "🌿 JARDINES VERTICALES SINTÉTICOS",
-      "",
-      "Aporta vida, diseño y frescura a cualquier espacio con jardines verticales sintéticos de alta calidad — sin mantenimiento y siempre perfectos.",
-      "",
-      "🎨 DISEÑOS DISPONIBLES:",
-      "• Mediterráneo",
-      "• Tropical Rojo",
-      "• Helechos",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Material sintético de alta calidad y aspecto realista",
-      "• No requiere riego, poda ni mantenimiento",
-      "• Resistente a rayos UV — no se decolora con el tiempo",
-      "• Diseño personalizado según el espacio",
-      "• Ideal para interiores y exteriores",
-      "• Iluminación LED opcional para mayor impacto visual",
-      "",
-      "💡 IDEAL PARA:",
-      "• Salas y recepciones",
-      "• Restaurantes y cafeterías",
-      "• Oficinas y locales comerciales",
-      "• Balcones y terrazas",
-      "",
-      "💬 Escríbenos con las medidas de tu espacio y el diseño que prefieres para cotizarte sin compromiso.",
-      "",
-      "📦 Envíos a nivel nacional",
-      "📍 Quito — Versalles y San Gregorio",
-      "📱 WhatsApp: 0969 484 145"
+      "Jardines verticales sintéticos para decorar paredes.",
+      "Diseños: Mediterráneo, Tropical Rojo y Helechos. Sin riego ni poda.",
+      "Envía las medidas y el diseño para cotizar. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "jardín vertical",
       "jardín vertical sintético",
       "jardín vertical artificial",
       "muro verde artificial",
-      "jardinería vertical",
-      "decoración con plantas artificiales",
-      "jardín vertical quito",
-      "plantas artificiales pared",
-      "jardín vertical oficina",
-      "jardín vertical interior",
-      "jardín vertical exterior",
-      "muro vegetal sintético",
-      "jardín vertical restaurante",
-      "decoración pared artificial",
-      "jardín vertical ecuador"
+      "jardinería vertical"
     ],
     "skus": [
       "JARD-VERT-MED-001 (Mediterráneo)",
@@ -1806,59 +1319,22 @@ const data = [
     "name": "Musgo Atrapamugre 100% PVC",
     "cat": "tecnico",
     "ref": "MUSGO-PVC",
-    "titulo": "Musgo Atrapamugre 100% PVC · $12 Metro Lineal · 16 Colores · Antideslizante · Quito · Envío Nacional",
+    "titulo": "Musgo atrapamugre PVC por metro lineal | Quito",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Hogar",
     "estado": "Nuevo",
     "descLines": [
-      "🧹 MUSGO ATRAPAMUGRE — 100% PVC",
-      "💰 $12,00 el metro lineal",
-      "",
-      "El piso ideal para entradas y zonas de alto tránsito. Atrapa la suciedad y humedad antes de que entre a tu hogar o negocio.",
-      "",
-      "📐 MEDIDAS:",
-      "• Ancho del rollo: 1,20 m",
-      "• Rollo completo: 12 metros lineales",
-      "• También se vende por metro lineal",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Material 100% PVC de alta durabilidad",
-      "• Atrapa suciedad y humedad",
-      "• Base antideslizante",
-      "• Fácil de limpiar",
-      "• 16 colores disponibles",
-      "",
-      "🎨 COLORES DISPONIBLES:",
-      "Negro · Gris oscuro · Gris claro · Blanco · Café · Beige · Amarillo · Naranja · Rosa pastel · Fucsia · Rojo · Vinotinto · Morado · Verde esmeralda · Verde lima · Azul claro · Azul marino",
-      "",
-      "💡 IDEAL PARA:",
-      "• Entradas de casas y oficinas",
-      "• Locales comerciales y restaurantes",
-      "• Garajes y zonas de alto tránsito",
-      "• Hoteles y edificios",
-      "",
-      "💬 Escríbenos indicando el color y los metros que necesitas para confirmarte disponibilidad.",
-      "",
-      "📦 Envíos a nivel nacional",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145"
+      "Musgo atrapamugre 100% PVC para entradas de casas y negocios.",
+      "$12 por metro lineal. Ancho: 1,20 m. Rollo completo: 12 m.",
+      "Consulta colores y disponibilidad. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "musgo atrapamugre",
       "piso atrapamugre",
       "tapete atrapasuciedad",
       "piso pvc entrada",
-      "musgo pvc",
-      "alfombra atrapamugre",
-      "piso antideslizante entrada",
-      "tapete para entrada",
-      "piso pvc colores",
-      "musgo pvc quito",
-      "alfombra pvc rollo",
-      "piso pvc metro lineal",
-      "tapete pvc colores",
-      "piso pvc ecuador",
-      "atrapa suciedad humedad"
+      "musgo pvc"
     ],
     "skus": [
       "MUSGO-PVC-001 (por metro lineal)",
@@ -1872,53 +1348,22 @@ const data = [
     "cat": "textil",
     "ref": "ALF-ASC",
     "foto": "assets/textiles/ALF-ASC.png",
-    "titulo": "Alfombras para Ascensor Personalizadas · Logo del Edificio · Antideslizante · Quito · Envío Nacional",
+    "titulo": "Alfombra para ascensor con logo | A medida",
     "precio": "Definir precio al publicar",
     "categoria": "Casa y jardín → Hogar",
     "estado": "Nuevo",
     "descLines": [
-      "🛗 ALFOMBRAS PARA ASCENSOR — LA SOLUCIÓN PROFESIONAL Y SEGURA",
-      "",
-      "Dale una imagen elegante y segura al ascensor de tu edificio, conjunto residencial u oficina. Alfombras a medida con el nombre o logo de tu edificio.",
-      "",
-      "✅ CARACTERÍSTICAS:",
-      "• Personalización con el nombre o logo del edificio",
-      "• Base antideslizante — mayor seguridad para los usuarios",
-      "• Material resistente al tráfico diario",
-      "• Medida exacta según el ascensor",
-      "• Fácil limpieza y mantenimiento",
-      "• Acabado profesional y duradero",
-      "",
-      "🏢 IDEAL PARA:",
-      "• Edificios residenciales",
-      "• Conjuntos habitacionales",
-      "• Oficinas y torres corporativas",
-      "• Hoteles y centros comerciales",
-      "",
-      "💰 PRECIO POR COTIZACIÓN",
-      "El valor depende de la medida del ascensor y el diseño.",
-      "",
-      "💬 Escríbenos con la medida de tu ascensor y el nombre o logo que quieres incluir. Te enviamos el presupuesto en minutos.",
-      "",
-      "📦 Envíos a todo el Ecuador",
-      "📍 Quito — Versalles N21-157 y San Gregorio",
-      "📱 WhatsApp: 0969 484 145"
+      "Alfombras a medida para ascensores, con nombre o logo del edificio.",
+      "Base antideslizante y fácil limpieza.",
+      "Envía las medidas y el diseño para cotizar. Envíos a Ecuador.",
+      "Quito. WhatsApp: 0969 484 145."
     ],
     "tags": [
       "alfombra para ascensor",
       "alfombra ascensor edificio",
       "alfombra antideslizante ascensor",
       "alfombra personalizada edificio",
-      "seguridad ascensor",
-      "alfombra edificio quito",
-      "alfombra conjunto residencial",
-      "alfombra corporativa ascensor",
-      "piso ascensor",
-      "alfombra logo edificio",
-      "administración de edificios",
-      "alfombra a medida ascensor",
-      "alfombra oficina torre",
-      "alfombra hotel ascensor"
+      "seguridad ascensor"
     ],
     "skus": [
       "ALF-ASC-001 (estándar)",
@@ -1948,7 +1393,7 @@ const CATS = {
 
 /* ---------------- HELPERS ---------------- */
 function esc(str){
-  return String(str).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+  return String(str).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
 }
 function isPriceReady(precio){
   return /^\d+(\.\d+)?$/.test(String(precio).trim());
@@ -1987,7 +1432,7 @@ data.forEach((p, i) => {
          <span class="price-cur">$</span><span class="price-num">${esc(p.precio)}</span>
          <button class="icon-copy-btn" data-copy="${encodeURIComponent(p.precio)}" aria-label="Copiar precio" title="Copiar precio">${COPY_ICON}</button>
        </div>`
-    : `<div class="price-tag pending"><span class="price-pending-label">Definir precio</span></div>`;
+    : `<div class="price-tag pending"><span class="price-pending-label">${p.estado === 'Alquiler' ? 'Definir tarifa' : 'Definir precio'}</span></div>`;
 
   const descRaw = p.descLines.join('\n');
   const descHtml = p.descLines.map(line => esc(line) || '&nbsp;').join('<br>');
@@ -1999,18 +1444,18 @@ data.forEach((p, i) => {
   }).join('');
 
   const thumbCardHtml = p.foto
-    ? `<div class="product-thumb"><img src="${esc(p.foto)}" alt="${esc(p.name)}" loading="lazy"><span class="product-badge" style="--accent:${meta.color}">${ICONS[p.cat]}${meta.label}</span></div>`
+    ? `<div class="product-thumb"><img src="${esc(p.foto)}" alt="${esc(p.name)}" loading="lazy"${p.fotoFit === 'contain' ? ' class="photo-contain"' : ''}><span class="product-badge" style="--accent:${meta.color}">${ICONS[p.cat]}${meta.label}</span></div>`
     : `<div class="product-thumb product-thumb-empty">${ICONS[p.cat]}<span class="product-badge" style="--accent:${meta.color}">${ICONS[p.cat]}${meta.label}</span></div>`;
 
   gridHtml += `
-  <article class="product-card" data-cat="${p.cat}" data-name="${esc(p.name).toLowerCase()} ${esc(p.titulo).toLowerCase()}" style="--accent:${meta.color}; --i:${i};" onclick="openModal('${p.ref}')">
+  <article class="product-card" data-cat="${p.cat}" data-name="${esc(slug(p.name + ' ' + p.titulo + ' ' + p.tags.join(' ')))}" style="--accent:${meta.color}; --i:${i};" onclick="openModal('${p.ref}')">
     ${thumbCardHtml}
     <div class="product-body">
       <h3 class="product-title">${esc(p.name)}</h3>
       <p class="product-excerpt">${esc(excerptFrom(p))}</p>
       <div class="product-foot">
         <span class="product-ref">REF. ${esc(p.ref)}</span>
-        <button class="product-see" type="button">Ver Script
+        <button class="product-see" type="button">Ver anuncio
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
       </div>
@@ -2031,6 +1476,7 @@ data.forEach((p, i) => {
         </button>
       </div>
       <div class="pmodal-body">
+        ${p.fotoReferencia ? `<figure class="reference-photo"><img src="${esc(p.foto)}" alt="${esc(p.name)}" loading="lazy"><figcaption>Imagen de referencia · <a href="${esc(p.foto)}" download>Descargar foto</a></figcaption></figure>` : ''}
         <div class="pub-meta">
           ${priceHtml}
           <dl class="spec-list">
@@ -2040,15 +1486,17 @@ data.forEach((p, i) => {
         </div>
 
         <div class="field">
-          <div class="field-head"><span>Título</span><button class="btn-copy" data-copy="${encodeURIComponent(p.titulo)}">${COPY_ICON} Copiar</button></div>
+          <div class="field-head"><span>Título · ${p.titulo.length} caracteres</span><button class="btn-copy" data-copy="${encodeURIComponent(p.titulo)}">${COPY_ICON} Copiar</button></div>
           <div class="value-block titulo-block">${esc(p.titulo)}</div>
         </div>
 
         <div class="field">
-          <div class="field-head"><span>Descripción</span><button class="btn-copy" data-copy="${encodeURIComponent(descRaw)}">${COPY_ICON} Copiar</button></div>
+          <div class="field-head"><span>Descripción breve · ${descRaw.length} caracteres</span><button class="btn-copy" data-copy="${encodeURIComponent(descRaw)}">${COPY_ICON} Copiar</button></div>
           <div class="value-block desc-block copyable" tabindex="0">${descHtml}</div>
         </div>
 
+        <details class="extra-details">
+          <summary>Etiquetas, SKU y notas</summary>
         <div class="field">
           <div class="field-head"><span>Etiquetas de producto</span><button class="btn-copy" data-copy="${encodeURIComponent(tagsRaw)}">${COPY_ICON} Copiar todas</button></div>
           <div class="chip-wrap">${tagsHtml}</div>
@@ -2060,8 +1508,9 @@ data.forEach((p, i) => {
         </div>
 
         <div class="tip-note">
-          <p><strong>Tip</strong> — ${esc(p.tip)}</p>
+          <p><strong>Nota</strong> — ${esc(p.tip)}</p>
         </div>
+        </details>
       </div>
       <div class="pmodal-footer">
         <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg> REF. ${esc(p.ref)}</p>
@@ -2104,7 +1553,7 @@ const resultCountEl = document.getElementById('resultCount');
 let activeCat = 'all';
 
 function applyFilters(){
-  const q = searchInput.value.trim().toLowerCase();
+  const q = slug(searchInput.value.trim());
   let totalVisible = 0;
   containerEl.querySelectorAll('.product-card').forEach(card => {
     const matchesCat = activeCat === 'all' || card.dataset.cat === activeCat;
@@ -2152,7 +1601,7 @@ function copyToClipboard(text, btn){
   function done(){
     if (!btn.dataset.label) btn.dataset.label = btn.innerHTML;
     btn.classList.add('copied');
-    btn.innerHTML = btn.classList.contains('btn-copy') ? (COPY_ICON + ' ✓ Copiado') : COPY_ICON;
+    btn.innerHTML = btn.matches('.btn-copy, .pmodal-copy-all') ? (COPY_ICON + ' Copiado') : COPY_ICON;
     showToast();
     clearTimeout(btn._t);
     btn._t = setTimeout(() => {
